@@ -9,7 +9,10 @@
 - `media/photos/` — портреты, фото глаз для «Контактов», логотип-глаз.
 - `static/` — копируется как есть (шрифты Sofia Sans / Sofia Sans Extra Condensed, свои, не Google Fonts).
 
-Публикация: push в `main` → GitHub Actions (`.github/workflows/deploy.yml`) собирает и выкладывает на GitHub Pages, домен sanfirov.art (DNS у reg.ru).
+Репозиторий: https://github.com/raonesone/sanfirov-site (GitHub CLI: `~/.local/bin/gh`, вход выполнен под raonesone).
+Публикация: push в `main` → GitHub Actions (`.github/workflows/deploy.yml`) собирает сайт; выкладка на GitHub Pages идёт, только если в репозитории есть переменная `PUBLISH=true`.
+
+Запуск (ещё не сделан; только когда пользователь скажет): сделать репозиторий публичным (`gh repo edit --visibility public --accept-visibility-change-consequences`), включить Pages с источником GitHub Actions (`gh api -X POST repos/raonesone/sanfirov-site/pages -f build_type=workflow`), задать домен (`gh api -X PUT repos/raonesone/sanfirov-site/pages -f cname=sanfirov.art`), `gh variable set PUBLISH --body true`, перезапустить workflow. Пользователь настраивает DNS у reg.ru: A @ → 185.199.108.153 / 109 / 110 / 111.153, CNAME www → raonesone.github.io. Когда DNS заработает — включить HTTPS (`-F https_enforced=true`).
 
 ## Поля проекта
 
