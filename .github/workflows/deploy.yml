@@ -1,4 +1,6 @@
-# Собирает сайт и публикует его на GitHub Pages при каждом изменении в main.
+# Собирает сайт при каждом изменении в main (проверка, что всё в порядке)
+# и публикует его на GitHub Pages, если в настройках репозитория
+# заведена переменная PUBLISH = true (Settings → Secrets and variables → Actions → Variables).
 name: Deploy
 
 on:
@@ -36,6 +38,7 @@ jobs:
 
   deploy:
     needs: build
+    if: vars.PUBLISH == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
