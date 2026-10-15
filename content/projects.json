@@ -1,0 +1,230 @@
+[
+  {
+    "slug": "project-01",
+    "title": {"ru": "Проект 01",  "en": "Project 01"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-02",
+    "title": {"ru": "Проект 02",  "en": "Project 02"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-03",
+    "title": {"ru": "Проект 03",  "en": "Project 03"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-04",
+    "title": {"ru": "Проект 04",  "en": "Project 04"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-05",
+    "title": {"ru": "Проект 05",  "en": "Project 05"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-06",
+    "title": {"ru": "Проект 06",  "en": "Project 06"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-07",
+    "title": {"ru": "Проект 07",  "en": "Project 07"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-08",
+    "title": {"ru": "Проект 08",  "en": "Project 08"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-09",
+    "title": {"ru": "Проект 09",  "en": "Project 09"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-10",
+    "title": {"ru": "Проект 10",  "en": "Project 10"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-11",
+    "title": {"ru": "Проект 11",  "en": "Project 11"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  },
+  {
+    "slug": "project-12",
+    "title": {"ru": "Проект 12",  "en": "Project 12"},
+    "type": {"ru": "Тип",  "en": "Type"},
+    "year": 2026,
+    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
+    "kinescope": "",
+    "credits": {
+      "ru": [
+        ["Режиссёр", "Имя Фамилия"],
+        ["Оператор-постановщик", "Александр Санфиров"]
+      ],
+      "en": [
+        ["Director", "Name Surname"],
+        ["Director of photography", "Alexander Sanfirov"]
+      ]
+    },
+    "placeholder": true
+  }
+]

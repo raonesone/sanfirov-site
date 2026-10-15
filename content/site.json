@@ -1,0 +1,49 @@
+{
+  "domain": "https://sanfirov.art",
+  "name": { "ru": "Александр Санфиров", "en": "Alexander Sanfirov" },
+  "role": { "ru": "Кинематографист", "en": "Cinematographer" },
+  "description": {
+    "ru": "Александр Санфиров — кинематографист. Портфолио: кино, реклама, музыкальные клипы.",
+    "en": "Alexander Sanfirov — cinematographer. Portfolio of films, commercials and music videos."
+  },
+
+  "nav": {
+    "work":    { "ru": "Работы",   "en": "Work" },
+    "about":   { "ru": "Обо мне",  "en": "About" },
+    "contact": { "ru": "Контакты", "en": "Contact" }
+  },
+
+  "about": {
+    "quote": {
+      "ru": "«Жизнь — это бесконечное наблюдение за невидимым»",
+      "en": "“Life is an endless observation of the invisible”"
+    },
+    "paragraphs": {
+      "ru": [
+        "Я наблюдаю за жизнью, ищу истории в повседневном и замечаю красоту в вещах, мимо которых мы привыкли проходить. В каждой истории для меня важны её собственный ритм, характер и ощущение присутствия.",
+        "Я пришёл в режиссуру через операторское искусство, поэтому изображение всегда было для меня способом думать и чувствовать. Свет, пространство, движение камеры и тишина порой способны рассказать больше, чем слова. Мне нравится соединять документальность с выразительным визуальным языком, оставляя в кадре место для случайности, несовершенства самой жизни."
+      ],
+      "en": [
+        "I observe life, look for stories in the everyday and notice beauty in the things we are used to walking past. In every story, what matters to me is its own rhythm, character and sense of presence.",
+        "I came to directing through cinematography, so the image has always been my way of thinking and feeling. Light, space, camera movement and silence can sometimes say more than words. I like to combine documentary with an expressive visual language, leaving room in the frame for chance and for the imperfection of life itself."
+      ]
+    },
+    "portraits": [
+      { "file": "portrait-1.webp", "alt": { "ru": "Александр Санфиров на съёмке — чёрно-белая плёночная фотография", "en": "Alexander Sanfirov on set — black-and-white film photograph" } },
+      { "file": "portrait-2.jpg",  "alt": { "ru": "Александр Санфиров среди голых ветвей — чёрно-белая плёночная фотография", "en": "Alexander Sanfirov among bare branches — black-and-white film photograph" } }
+    ]
+  },
+
+  "social": [
+    { "name": "Vimeo",     "url": "https://vimeo.com/sanfirov" },
+    { "name": "Instagram", "url": "https://www.instagram.com/sanfirov/" },
+    { "name": "Telegram",  "url": "https://t.me/sanfirov" }
+  ],
+
+  "agency": {
+    "label": { "ru": "Агентство", "en": "Representation" },
+    "name": "Tatique",
+    "url": "https://tatique.pro",
+    "email": "hi@tatique.pro"
+  }
+}
