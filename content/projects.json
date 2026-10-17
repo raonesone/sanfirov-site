@@ -1,230 +1,84 @@
 [
   {
-    "slug": "project-01",
-    "title": {"ru": "Проект 01",  "en": "Project 01"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "dom",
+    "title": {"ru": "Дом",  "en": "The House"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/fRNbVjnnRGfAzFo89ZgvE4"
   },
   {
-    "slug": "project-02",
-    "title": {"ru": "Проект 02",  "en": "Project 02"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "shar",
+    "title": {"ru": "Шар",  "en": "Balloon"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/iKLRZfUcLTLheLcqNmPsKF"
   },
   {
-    "slug": "project-03",
-    "title": {"ru": "Проект 03",  "en": "Project 03"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "doctor-head",
+    "title": {"ru": "Доктор Хед",  "en": "Doctor Head"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/b8B1EAEGhKHMot9pogz2Qn"
   },
   {
-    "slug": "project-04",
-    "title": {"ru": "Проект 04",  "en": "Project 04"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "kollab",
+    "title": {"ru": "Коллаб",  "en": "Collab"},
+    "type": {"ru": "Спецпроект",  "en": "Special project"},
+    "year": 2020,
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH"
   },
   {
-    "slug": "project-05",
-    "title": {"ru": "Проект 05",  "en": "Project 05"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "ballet",
+    "title": {"ru": "Балет",  "en": "Ballet"},
+    "type": {"ru": "Промо",  "en": "Theatrical promo"},
+    "year": 2019,
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/96fXzxwdEHrMd5Ap9dGg6q"
   },
   {
-    "slug": "project-06",
-    "title": {"ru": "Проект 06",  "en": "Project 06"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "yarkoe-solntse",
+    "title": {"ru": "Яркое солнце",  "en": "Bright Sun"},
+    "type": {"ru": "Клип",  "en": "Music video"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/wopCbQPT1TbT7ZzLhbKG4G"
   },
   {
-    "slug": "project-07",
-    "title": {"ru": "Проект 07",  "en": "Project 07"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "tanaker",
+    "title": {"ru": "Танакер",  "en": "Tanaker"},
+    "type": {"ru": "Клип",  "en": "Music video"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/7XpwtPnQUzskerBgiiMCgH"
   },
   {
-    "slug": "project-08",
-    "title": {"ru": "Проект 08",  "en": "Project 08"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "korvalol",
+    "title": {"ru": "Корвалол",  "en": "Corvalol"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/sXpkyzzRnhro3bkfgLdjtD"
   },
   {
-    "slug": "project-09",
-    "title": {"ru": "Проект 09",  "en": "Project 09"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "vivo",
+    "title": {"ru": "Виво",  "en": "Vivo"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "year": 2021,
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/5VvEoKQYEr7C8ZDyvr4xXj"
   },
   {
-    "slug": "project-10",
-    "title": {"ru": "Проект 10",  "en": "Project 10"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "golf",
+    "title": {"ru": "Гольф",  "en": "Golf"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "year": 2020,
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/dTJWTKnvhL54ZnxFQQKx9x"
   },
   {
-    "slug": "project-11",
-    "title": {"ru": "Проект 11",  "en": "Project 11"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
-  },
-  {
-    "slug": "project-12",
-    "title": {"ru": "Проект 12",  "en": "Project 12"},
-    "type": {"ru": "Тип",  "en": "Type"},
-    "year": 2026,
-    "text": {"ru": "1–2 предложения о проекте: идея, режиссёр, ваша роль.",  "en": "1–2 sentences about the project: the idea, the director, your role."},
-    "kinescope": "",
-    "credits": {
-      "ru": [
-        ["Режиссёр", "Имя Фамилия"],
-        ["Оператор-постановщик", "Александр Санфиров"]
-      ],
-      "en": [
-        ["Director", "Name Surname"],
-        ["Director of photography", "Alexander Sanfirov"]
-      ]
-    },
-    "placeholder": true
+    "slug": "vaults",
+    "title": {"ru": "Vaults",  "en": "Vaults"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/mv9WHFi5scQCA2KDTucdX6",
+    "hidden": true
   }
 ]
