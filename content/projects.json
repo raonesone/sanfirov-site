@@ -1,37 +1,40 @@
 [
   {
     "slug": "dom",
-    "title": {"ru": "Дом",  "en": "The House"},
-    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "title": {"ru": "Дом Наркомфина",  "en": "Narkomfin Building"},
+    "type": {"ru": "Промо",  "en": "Promo"},
+    "year": 2025,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/fRNbVjnnRGfAzFo89ZgvE4"
   },
   {
     "slug": "shar",
-    "title": {"ru": "Шар",  "en": "Balloon"},
-    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "title": {"ru": "Winline 2. Skyrider",  "en": "Winline 2. Skyrider"},
+    "type": {"ru": "Экшн",  "en": "Action"},
+    "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/iKLRZfUcLTLheLcqNmPsKF"
   },
   {
     "slug": "doctor-head",
-    "title": {"ru": "Доктор Хед",  "en": "Doctor Head"},
+    "title": {"ru": "Dr.Head",  "en": "Dr.Head"},
     "type": {"ru": "Реклама",  "en": "Commercial"},
+    "year": 2025,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/b8B1EAEGhKHMot9pogz2Qn"
   },
   {
     "slug": "kollab",
-    "title": {"ru": "Коллаб",  "en": "Collab"},
-    "type": {"ru": "Спецпроект",  "en": "Special project"},
-    "year": 2020,
+    "title": {"ru": "GES2: Collab",  "en": "GES2: Collab"},
+    "type": {"ru": "Документальный фильм",  "en": "Documentary"},
+    "year": 2023,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH"
   },
   {
     "slug": "ballet",
     "title": {"ru": "Балет",  "en": "Ballet"},
-    "type": {"ru": "Промо",  "en": "Theatrical promo"},
+    "type": {"ru": "Промо",  "en": "Promo"},
     "year": 2019,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/96fXzxwdEHrMd5Ap9dGg6q"
@@ -40,26 +43,29 @@
     "slug": "yarkoe-solntse",
     "title": {"ru": "Яркое солнце",  "en": "Bright Sun"},
     "type": {"ru": "Клип",  "en": "Music video"},
+    "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/wopCbQPT1TbT7ZzLhbKG4G"
   },
   {
     "slug": "tanaker",
-    "title": {"ru": "Танакер",  "en": "Tanaker"},
+    "title": {"ru": "Пахнем одинаково",  "en": "We Smell the Same"},
     "type": {"ru": "Клип",  "en": "Music video"},
+    "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/7XpwtPnQUzskerBgiiMCgH"
   },
   {
     "slug": "korvalol",
-    "title": {"ru": "Корвалол",  "en": "Corvalol"},
+    "title": {"ru": "Корвалол ТВС",  "en": "Corvalol TVS"},
     "type": {"ru": "Реклама",  "en": "Commercial"},
+    "year": 2023,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/sXpkyzzRnhro3bkfgLdjtD"
   },
   {
     "slug": "vivo",
-    "title": {"ru": "Виво",  "en": "Vivo"},
+    "title": {"ru": "Vivo V20 Series",  "en": "Vivo V20 Series"},
     "type": {"ru": "Реклама",  "en": "Commercial"},
     "year": 2021,
     "text": {"ru": "",  "en": ""},
@@ -67,7 +73,7 @@
   },
   {
     "slug": "golf",
-    "title": {"ru": "Гольф",  "en": "Golf"},
+    "title": {"ru": "Strong Figures",  "en": "Strong Figures"},
     "type": {"ru": "Реклама",  "en": "Commercial"},
     "year": 2020,
     "text": {"ru": "",  "en": ""},
