@@ -25,19 +25,19 @@
   },
   {
     "slug": "kollab",
-    "title": {"ru": "ГЭС2: Коллаб 23",  "en": "GES2 COLLAB 23"},
+    "title": {"ru": "ГЭС2: Коллаб",  "en": "GES2 COLLAB"},
     "type": {"ru": "Документальный",  "en": "Documentary"},
     "year": 2023,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/mv9WHFi5scQCA2KDTucdX6"
   },
   {
-    "slug": "ballet",
-    "title": {"ru": "Ballet",  "en": "Ballet"},
-    "type": {"ru": "Промо",  "en": "Promo"},
-    "year": 2019,
+    "slug": "dobroshrift",
+    "title": {"ru": "L'ONE — Доброшрифт",  "en": "L'ONE — Dobroshrift"},
+    "type": {"ru": "Клип / Социальный",  "en": "Music / Social"},
+    "year": 2021,
     "text": {"ru": "",  "en": ""},
-    "kinescope": "https://kinescope.io/96fXzxwdEHrMd5Ap9dGg6q"
+    "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH"
   },
   {
     "slug": "yarkoe-solntse",
@@ -54,6 +54,14 @@
     "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/7XpwtPnQUzskerBgiiMCgH"
+  },
+  {
+    "slug": "ballet",
+    "title": {"ru": "Ballet",  "en": "Ballet"},
+    "type": {"ru": "Промо",  "en": "Promo"},
+    "year": 2019,
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/96fXzxwdEHrMd5Ap9dGg6q"
   },
   {
     "slug": "korvalol",
@@ -78,13 +86,5 @@
     "year": 2021,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/dTJWTKnvhL54ZnxFQQKx9x"
-  },
-  {
-    "slug": "dobroshrift",
-    "title": {"ru": "L'ONE — Доброшрифт",  "en": "L'ONE — Dobroshrift"},
-    "type": {"ru": "Клип / Социальный",  "en": "Music / Social"},
-    "year": 2021,
-    "text": {"ru": "",  "en": ""},
-    "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH"
   }
 ]
