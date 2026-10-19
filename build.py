@@ -191,7 +191,7 @@ ICONS = {
 PLAY_ICON = '<svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>'
 
 
-def icon(name, size=20, stroke=1.5):
+def icon(name, size=24, stroke=1.9):
     return (f'<svg width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
             f'stroke-width="{stroke}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
             f'{ICONS[name]}</svg>')
@@ -385,7 +385,7 @@ main{flex:1 0 auto}
 .socials .label{padding-bottom:10px}
 .soc{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 0 8px;border-bottom:1px solid rgba(237,237,230,.3);font:900 clamp(56px,6.4vw,96px)/.9 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg);transition:padding-left .35s ease}
 .soc:hover{padding-left:16px}
-.soc svg{flex:none;width:36px;height:36px}
+.soc svg{flex:none;width:40px;height:40px}
 .agency{display:flex;flex-wrap:wrap;align-items:center;gap:0 24px;font-size:17px}
 .c-link{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;transition:opacity .2s}
 .c-link:hover{opacity:.7}
@@ -430,7 +430,7 @@ body{padding:0 16px}
 .bg img{object-position:10% center}
 .contact .ftr{margin-top:0;border-top:0}
 .soc{gap:16px;padding:10px 0 6px;font-size:64px}
-.soc svg{width:30px;height:30px}
+.soc svg{width:34px;height:34px}
 .socials .label{padding-bottom:8px;font-size:12px}
 .agency{gap:0 20px}
 .agency .label{flex:1 0 100%;font-size:12px}
@@ -618,7 +618,7 @@ def about_page(pg, portraits):
 
 def contact_page(pg, eyes):
     site = pg.site
-    socials = "".join(f'<a class="soc" href="{esc(s["url"])}">{esc(s["name"])}{icon(s["name"], 36, 1.25)}</a>'
+    socials = "".join(f'<a class="soc" href="{esc(s["url"])}">{esc(s["name"])}{icon(s["name"], 40, 1.6)}</a>'
                       for s in site["social"])
     ag = site["agency"]
     body = f"""<div class="bg" aria-hidden="true">{img_tag(eyes, "", "100vw", eager=True, high=True)}</div>
