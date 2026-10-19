@@ -1,16 +1,16 @@
 [
   {
     "slug": "dom",
-    "title": {"ru": "Дом Наркомфина",  "en": "Narkomfin Building"},
-    "type": {"ru": "Промо",  "en": "Promo"},
-    "year": 2025,
+    "title": {"ru": "Дом Наркомфина",  "en": "Narkomfin"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "year": 2024,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/fRNbVjnnRGfAzFo89ZgvE4"
   },
   {
     "slug": "shar",
-    "title": {"ru": "Winline 2. Skyrider",  "en": "Winline 2. Skyrider"},
-    "type": {"ru": "Экшн",  "en": "Action"},
+    "title": {"ru": "Скайрайдер",  "en": "Skyrider"},
+    "type": {"ru": "Экшн-реклама",  "en": "Action Commercial"},
     "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/iKLRZfUcLTLheLcqNmPsKF"
@@ -25,15 +25,15 @@
   },
   {
     "slug": "kollab",
-    "title": {"ru": "GES2: Collab",  "en": "GES2: Collab"},
-    "type": {"ru": "Документальный фильм",  "en": "Documentary"},
+    "title": {"ru": "ГЭС2: Коллаб 23",  "en": "GES2 COLLAB 23"},
+    "type": {"ru": "Документальный",  "en": "Documentary"},
     "year": 2023,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH"
   },
   {
     "slug": "ballet",
-    "title": {"ru": "Балет",  "en": "Ballet"},
+    "title": {"ru": "Ballet",  "en": "Ballet"},
     "type": {"ru": "Промо",  "en": "Promo"},
     "year": 2019,
     "text": {"ru": "",  "en": ""},
@@ -41,23 +41,23 @@
   },
   {
     "slug": "yarkoe-solntse",
-    "title": {"ru": "Яркое солнце",  "en": "Bright Sun"},
-    "type": {"ru": "Клип",  "en": "Music video"},
+    "title": {"ru": "Яркое солнце",  "en": "Yarkoe Solntse"},
+    "type": {"ru": "Клип",  "en": "Music"},
     "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/wopCbQPT1TbT7ZzLhbKG4G"
   },
   {
     "slug": "tanaker",
-    "title": {"ru": "Пахнем одинаково",  "en": "We Smell the Same"},
-    "type": {"ru": "Клип",  "en": "Music video"},
+    "title": {"ru": "Пахнем одинаково",  "en": "Paxnem Odinakovo"},
+    "type": {"ru": "Клип",  "en": "Music"},
     "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/7XpwtPnQUzskerBgiiMCgH"
   },
   {
     "slug": "korvalol",
-    "title": {"ru": "Корвалол ТВС",  "en": "Corvalol TVS"},
+    "title": {"ru": "Корвалол TVC",  "en": "Corvalol TVC"},
     "type": {"ru": "Реклама",  "en": "Commercial"},
     "year": 2023,
     "text": {"ru": "",  "en": ""},
@@ -75,7 +75,7 @@
     "slug": "golf",
     "title": {"ru": "Strong Figures",  "en": "Strong Figures"},
     "type": {"ru": "Реклама",  "en": "Commercial"},
-    "year": 2020,
+    "year": 2021,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/dTJWTKnvhL54ZnxFQQKx9x"
   },
