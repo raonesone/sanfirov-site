@@ -392,7 +392,7 @@ main{flex:1 0 auto}
 
 .proj{padding:8px 0 24px}
 .player{position:relative;width:min(100%,calc((100vh - 140px)*16/9));margin:0 auto;aspect-ratio:16/9;overflow:hidden;background:#000}
-.player>*{position:absolute;inset:0;width:100%;height:100%;border:0}
+.player>*{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;color-scheme:dark}
 .player img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter .4s}
 .play{display:block;padding:0;background:none;cursor:pointer;color:var(--fg)}
 .play:hover img{filter:brightness(.7)}
@@ -441,6 +441,17 @@ body{padding:0 16px}
 .stills{grid-template-columns:minmax(0,1fr);margin-top:40px}
 .pnav{margin-top:40px}
 }
+.lb{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:64px var(--pad) 32px;background:rgba(11,11,11,.96);opacity:0;transition:opacity .25s}
+.lb.on{opacity:1}
+.lb-box{width:min(100%,calc((100vh - 170px)*16/9))}
+.lb-video{position:relative;aspect-ratio:16/9;background:#000}
+.lb-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;color-scheme:dark}
+.lb-cap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:14px;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.lb-cap b{font:900 20px/1 var(--cond)}
+.lb-cap span{color:var(--mute)}
+.lb-x{position:absolute;top:12px;right:var(--pad);display:inline-flex;align-items:center;min-height:44px;padding:0;background:none;border:0;color:var(--fg);font:inherit;font-size:14px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
+.lb-x:hover{opacity:.7}
+@media (max-width:720px){.lb{padding:64px 16px 24px}.lb-cap b{font-size:18px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 """
 
@@ -449,7 +460,7 @@ var m=d.getElementById('menu'),o=d.querySelector('[data-open]'),c=d.querySelecto
 function shut(){m.hidden=true;d.body.style.overflow='';o.setAttribute('aria-expanded','false');o.focus()}
 if(m&&o&&c){o.onclick=function(){m.hidden=false;d.body.style.overflow='hidden';o.setAttribute('aria-expanded','true');c.focus()};c.onclick=shut;
 d.addEventListener('keydown',function(e){if(e.key==='Escape'&&!m.hidden)shut()})}
-d.querySelectorAll('[data-kinescope]').forEach(function(p){var b=p.querySelector('button'),warm=0;
+d.querySelectorAll('.player[data-kinescope]').forEach(function(p){var b=p.querySelector('button'),warm=0;
 function pre(){if(warm)return;warm=1;var l=d.createElement('link');l.rel='preconnect';l.href='https://kinescope.io';d.head.appendChild(l)}
 b.addEventListener('pointerenter',pre);b.addEventListener('focus',pre);
 b.onclick=function(){var f=d.createElement('iframe');f.src='https://kinescope.io/embed/'+p.dataset.kinescope+'?autoplay=1';
@@ -458,6 +469,22 @@ f.title=b.getAttribute('aria-label');p.replaceChildren(f)}});
 var pf=d.querySelector('.pframe');if(pf){var im=pf.querySelectorAll('.pimg'),bt=d.querySelectorAll('.pbtn'),cur=0;
 function show(i){cur=i;im.forEach(function(x,k){x.classList.toggle('on',k===i)});bt.forEach(function(x,k){x.setAttribute('aria-pressed',k===i)})}
 pf.onclick=function(){show((cur+1)%im.length)};bt.forEach(function(x,k){x.onclick=function(){show(k)}})}
+var g=d.querySelector('.grid[data-lb]');if(g){var lb=null,last=null,pushed=0,hot=0;
+function heat(){if(hot)return;hot=1;var l=d.createElement('link');l.rel='preconnect';l.href='https://kinescope.io';d.head.appendChild(l)}
+g.addEventListener('pointerover',heat);g.addEventListener('focusin',heat);
+function close(back){if(!lb)return;lb.remove();lb=null;d.body.style.overflow='';if(last)last.focus({preventScroll:true});if(back&&pushed){pushed=0;history.back()}}
+g.addEventListener('click',function(e){var a=e.target.closest('a.tile[data-kinescope]');
+if(!a||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button)return;e.preventDefault();close(0);last=a;
+lb=d.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.setAttribute('aria-label',a.dataset.title);
+lb.innerHTML='<button class="lb-x" type="button"></button><div class="lb-box"><div class="lb-video"><iframe allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write" allowfullscreen></iframe></div><div class="lb-cap"><b></b><span></span></div></div>';
+var x=lb.querySelector('.lb-x'),f=lb.querySelector('iframe');x.textContent=g.dataset.close;
+lb.querySelector('b').textContent=a.dataset.title;lb.querySelector('.lb-cap span').textContent=a.dataset.meta;
+f.title=a.dataset.title;f.src='https://kinescope.io/embed/'+a.dataset.kinescope+'?autoplay=1';
+x.onclick=function(){close(1)};lb.addEventListener('click',function(ev){if(ev.target===lb||ev.target.classList.contains('lb-box'))close(1)});
+d.body.appendChild(lb);d.body.style.overflow='hidden';requestAnimationFrame(function(){lb&&lb.classList.add('on')});x.focus();
+history.pushState({lb:1},'',a.href);pushed=1});
+addEventListener('popstate',function(){pushed=0;close(0)});
+d.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb)close(1)})}
 })();"""
 
 
@@ -530,6 +557,15 @@ def meta_line(pg, p):
     return f'{esc(pg.t(p["type"]))} · {esc(p["year"])}' if p.get("year") else esc(pg.t(p["type"]))
 
 
+def lightbox_attrs(pg, p):
+    """Data for opening the video in place, without leaving the grid."""
+    if not p["kinescope_id"]:
+        return ""
+    meta = pg.t(p["type"]) + (f' · {p["year"]}' if p.get("year") else "")
+    return (f' data-kinescope="{esc(p["kinescope_id"])}" data-title="{esc(pg.t(p["title"]))}"'
+            f' data-meta="{esc(meta)}"')
+
+
 def work_page(pg, projects, posters, logo):
     tiles = []
     for i, p in enumerate(projects):
@@ -537,13 +573,13 @@ def work_page(pg, projects, posters, logo):
         text = pg.t(p.get("text") or {"ru": "", "en": ""})
         desc = f"<p>{esc(text)}</p>" if text else ""
         tiles.append(
-            f'<a class="tile" href="{pg.url("project:" + p["slug"])}">'
+            f'<a class="tile" href="{pg.url("project:" + p["slug"])}"{lightbox_attrs(pg, p)}>'
             f'{frame(p, posters[p["slug"]], title, eager=i < 3, high=i == 0)}'
             f'<div class="cap"><div class="cap-row"><b>{esc(title)}</b><span>{meta_line(pg, p)}</span></div>{desc}</div></a>')
     body = f"""{header(pg)}
 <main>
 <h1 class="sr">{esc(pg.t(pg.site["name"]))} — {UI["works"][pg.lang]}</h1>
-<div class="grid">
+<div class="grid" data-lb data-close="{UI["close"][pg.lang]}">
 {chr(10).join(tiles)}
 </div>
 </main>
