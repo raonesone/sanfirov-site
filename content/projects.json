@@ -64,6 +64,14 @@
     "kinescope": "https://kinescope.io/96fXzxwdEHrMd5Ap9dGg6q"
   },
   {
+    "slug": "mgla",
+    "title": {"ru": "Мгла",  "en": "Mgla"},
+    "type": {"ru": "Клип",  "en": "Music"},
+    "year": 2019,
+    "text": {"ru": "",  "en": ""},
+    "kinescope": ""
+  },
+  {
     "slug": "korvalol",
     "title": {"ru": "Корвалол TVC",  "en": "Corvalol TVC"},
     "type": {"ru": "Реклама",  "en": "Commercial"},
