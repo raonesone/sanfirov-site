@@ -1,6 +1,7 @@
 {
   "domain": "https://sanfirov.art",
   "name": { "ru": "Александр Санфиров", "en": "Alexander Sanfirov" },
+  "brand": { "ru": "Саша Санфиров", "en": "Sasha Sanfirov" },
   "role": { "ru": "Кинематографист", "en": "Cinematographer" },
   "description": {
     "ru": "Александр Санфиров — кинематографист. Портфолио: кино, реклама, музыкальные клипы.",
@@ -8,7 +9,7 @@
   },
 
   "nav": {
-    "work":    { "ru": "Работы",   "en": "Work" },
+    "work":    { "ru": "Работы",   "en": "Works" },
     "about":   { "ru": "Обо мне",  "en": "About" },
     "contact": { "ru": "Контакты", "en": "Contact" }
   },

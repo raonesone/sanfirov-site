@@ -186,6 +186,8 @@ TILE_SIZES = "(max-width: 640px) calc(100vw - 32px), (max-width: 1000px) 50vw, 3
 ICONS = {
     "Vimeo": '<path d="M2.5 8.5C4 7 5.5 6 6.5 6c1.5 0 1.8 2 2.3 4.5.7 3.5 1.4 7 2.5 7 1.7 0 5.7-5 7.5-8.5 1.5-3 .7-4.7-1.3-4.5-1.7.1-3 1.3-3.7 3.1"/>',
     "Instagram": '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.8" fill="currentColor" stroke="none"/>',
+    "Arrow": '<path d="M7 17 17 7M8 7h9v9"/>',
+    "Mail": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/>',
     "Telegram": '<path d="M21.5 4.5 2.5 11.8l6.3 2.2 2.2 6 3.2-3.9 4.6 3.4z"/><path d="m8.8 14 9.4-7.1"/>',
 }
 PLAY_ICON = '<svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>'
@@ -262,8 +264,9 @@ def nav_links(pg, cls):
 
 def brand(pg, tag="a"):
     href = f' href="{pg.url("work")}"' if tag == "a" else ""
-    return (f'<{tag} class="brand"{href}><b>{esc(pg.t(pg.site["name"]))}</b>'
-            f'<small>{esc(pg.t(pg.site["role"]))}</small></{tag}>')
+    label = f'{pg.t(pg.site["name"])} — {pg.t(pg.site["role"])}'
+    return (f'<{tag} class="brand"{href} aria-label="{esc(label)}">'
+            f'<b>{esc(pg.t(pg.site["brand"]))}</b></{tag}>')
 
 
 def header(pg):
@@ -315,7 +318,7 @@ main{flex:1 0 auto}
 .sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px 32px;padding:24px 0 32px}
 .brand{display:flex;flex-direction:column;gap:4px;padding:6px 0;text-decoration:none}
-.brand b{font:900 22px/1 var(--cond);letter-spacing:.04em;text-transform:uppercase}
+.brand b{margin-right:-.6em;font-size:14px;font-weight:300;line-height:1;letter-spacing:.6em;text-transform:uppercase}
 .brand small{font-size:12px;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .menu{display:flex;gap:32px}
 .nav{display:inline-flex;align-items:center;min-height:44px;font-size:14px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--fg);transition:opacity .2s}
@@ -387,6 +390,7 @@ main{flex:1 0 auto}
 .soc{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 0 8px;border-bottom:1px solid rgba(237,237,230,.3);font:900 clamp(56px,6.4vw,96px)/.9 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg);transition:padding-left .35s ease}
 .soc:hover{padding-left:16px}
 .soc svg{flex:none;width:40px;height:40px}
+.soc-mail{font-size:clamp(40px,4.4vw,68px);text-transform:none}
 .agency{display:flex;flex-wrap:wrap;align-items:center;gap:0 24px;font-size:17px}
 .c-link{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;transition:opacity .2s}
 .c-link:hover{opacity:.7}
@@ -417,7 +421,7 @@ main{flex:1 0 auto}
 body{padding:0 16px}
 .hdr{flex-wrap:nowrap;padding:14px 0 18px}
 .brand{gap:3px;padding:4px 0}
-.brand b{font-size:20px}
+.brand b{font-size:14px;letter-spacing:.5em;margin-right:-.5em}
 .brand small{font-size:11px}
 .hdr .menu{display:none}
 .m-btn{display:inline-flex}
@@ -432,6 +436,7 @@ body{padding:0 16px}
 .contact .ftr{margin-top:0;border-top:0}
 .soc{gap:16px;padding:10px 0 6px;font-size:64px}
 .soc svg{width:34px;height:34px}
+.soc-mail{font-size:40px}
 .socials .label{padding-bottom:8px;font-size:12px}
 .agency{gap:0 20px}
 .agency .label{flex:1 0 100%;font-size:12px}
@@ -633,9 +638,9 @@ def contact_page(pg, eyes):
 <main>
 <div class="cbox">
 <nav class="socials" aria-label="{UI["social"][pg.lang]}"><span class="label">{UI["social"][pg.lang]}</span>{socials}</nav>
-<div class="agency"><span class="label">{esc(pg.t(ag["label"]))}</span>
-<a class="c-link" href="{esc(ag["url"])}">{esc(ag["name"])} ↗</a>
-<a class="c-link" href="mailto:{esc(ag["email"])}">{esc(ag["email"])}</a></div>
+<nav class="socials" aria-label="{esc(pg.t(ag["label"]))}"><span class="label">{esc(pg.t(ag["label"]))}</span>
+<a class="soc" href="{esc(ag["url"])}">{esc(ag["name"])}{icon("Arrow", 40, 1.6)}</a>
+<a class="soc soc-mail" href="mailto:{esc(ag["email"])}">{esc(ag["email"])}{icon("Mail", 40, 1.6)}</a></nav>
 </div>
 </main>
 {footer(pg, icons=False)}"""
