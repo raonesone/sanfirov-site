@@ -29,7 +29,7 @@
     "type": {"ru": "Документальный",  "en": "Documentary"},
     "year": 2023,
     "text": {"ru": "",  "en": ""},
-    "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH"
+    "kinescope": "https://kinescope.io/mv9WHFi5scQCA2KDTucdX6"
   },
   {
     "slug": "ballet",
@@ -80,11 +80,12 @@
     "kinescope": "https://kinescope.io/dTJWTKnvhL54ZnxFQQKx9x"
   },
   {
-    "slug": "vaults",
-    "title": {"ru": "Vaults",  "en": "Vaults"},
-    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "slug": "dobroshrift",
+    "title": {"ru": "L'ONE — Доброшрифт",  "en": "L'ONE — Dobroshrift"},
+    "type": {"ru": "Клип",  "en": "Music"},
+    "year": 2020,
     "text": {"ru": "",  "en": ""},
-    "kinescope": "https://kinescope.io/mv9WHFi5scQCA2KDTucdX6",
+    "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH",
     "hidden": true
   }
 ]
