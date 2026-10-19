@@ -204,8 +204,10 @@ UI = {
     "language": {"ru": "Язык", "en": "Language"},
     "social": {"ru": "Соцсети", "en": "Social"},
     "home": {"ru": "на главную", "en": "home"},
-    "portraits": {"ru": "Портреты", "en": "Portraits"},
-    "next_portrait": {"ru": "Показать следующий портрет", "en": "Show next portrait"},
+    "portraits": {"ru": "Фотографии", "en": "Photos"},
+    "prev_photo": {"ru": "Предыдущее фото", "en": "Previous photo"},
+    "next_photo": {"ru": "Следующее фото", "en": "Next photo"},
+    "next_portrait": {"ru": "Следующее фото", "en": "Next photo"},
     "watch": {"ru": "Смотреть", "en": "Watch"},
     "all_work": {"ru": "← Все работы", "en": "← All work"},
     "next": {"ru": "Следующий проект →", "en": "Next project →"},
@@ -360,13 +362,12 @@ main{flex:1 0 auto}
 
 .about{display:flex;flex-wrap:wrap;gap:48px 64px;padding:24px 0 88px}
 .portrait{flex:1 1 340px;max-width:520px;display:flex;flex-direction:column;gap:8px}
-.pframe{position:relative;display:block;width:100%;aspect-ratio:4/5;padding:0;border:0;background:var(--bg);cursor:pointer;overflow:hidden}
+.pframe{position:relative;display:block;width:100%;aspect-ratio:2/3;padding:0;border:0;background:var(--bg);cursor:pointer;overflow:hidden}
 .pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:left top;opacity:0;transition:opacity .6s ease}
 .pimg.on{opacity:1}
-.pbtns{display:flex;align-items:center;gap:24px}
-.pbtn{display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0;background:none;border:0;font:inherit;font-size:14px;letter-spacing:.12em;color:var(--mute);cursor:pointer;transition:color .2s}
-.pbtn:hover,.pbtn[aria-pressed=true]{color:var(--fg)}
-.pbtn[aria-pressed=true]::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px}
+.pbtns{display:flex;align-items:center;gap:8px;margin-left:-10px}
+.pbtn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;background:none;border:0;color:var(--fg);cursor:pointer;transition:opacity .2s}
+.pbtn:hover{opacity:.6}
 .bio{flex:999 1 480px;min-width:0;max-width:760px;display:flex;flex-direction:column;gap:18px}
 .quote{margin:0 0 22px;max-width:700px;font:900 clamp(44px,4.6vw,72px)/.95 var(--cond);text-transform:uppercase}
 .bio p{margin:0;max-width:620px;font-size:18px;line-height:1.6;font-weight:200;color:var(--soft)}
@@ -466,9 +467,11 @@ b.addEventListener('pointerenter',pre);b.addEventListener('focus',pre);
 b.onclick=function(){var f=d.createElement('iframe');f.src='https://kinescope.io/embed/'+p.dataset.kinescope+'?autoplay=1';
 f.allow='autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write';f.allowFullscreen=true;
 f.title=b.getAttribute('aria-label');p.replaceChildren(f)}});
-var pf=d.querySelector('.pframe');if(pf){var im=pf.querySelectorAll('.pimg'),bt=d.querySelectorAll('.pbtn'),cur=0;
-function show(i){cur=i;im.forEach(function(x,k){x.classList.toggle('on',k===i)});bt.forEach(function(x,k){x.setAttribute('aria-pressed',k===i)})}
-pf.onclick=function(){show((cur+1)%im.length)};bt.forEach(function(x,k){x.onclick=function(){show(k)}})}
+var pf=d.querySelector('.pframe');if(pf){var im=pf.querySelectorAll('.pimg'),n=im.length,cur=0;
+function load(k){var x=im[(k+n)%n];if(x.dataset.src){if(x.dataset.srcset)x.srcset=x.dataset.srcset;x.src=x.dataset.src;delete x.dataset.src;delete x.dataset.srcset}}
+function show(k){cur=(k+n)%n;load(cur);load(cur+1);load(cur-1);im.forEach(function(x,q){x.classList.toggle('on',q===cur)})}
+pf.onclick=function(){show(cur+1)};d.querySelectorAll('.pbtn').forEach(function(x){x.onclick=function(){show(cur+(+x.dataset.step))}});
+addEventListener('load',function(){load(1);load(n-1)})}
 var g=d.querySelector('.grid[data-lb]');if(g){var lb=null,last=null,pushed=0,hot=0;
 function heat(){if(hot)return;hot=1;var l=d.createElement('link');l.rel='preconnect';l.href='https://kinescope.io';d.head.appendChild(l)}
 g.addEventListener('pointerover',heat);g.addEventListener('focusin',heat);
@@ -592,13 +595,17 @@ def work_page(pg, projects, posters, logo):
 
 def about_page(pg, portraits):
     about = pg.site["about"]
-    imgs = "".join(
-        img_tag(info, pg.t(meta["alt"]), "(max-width: 720px) calc(100vw - 32px), 520px",
-                cls="pimg on" if i == 0 else "pimg", eager=True, high=i == 0)
-        for i, (meta, info) in enumerate(portraits))
-    btns = "".join(
-        f'<button class="pbtn" type="button" aria-pressed="{"true" if i == 0 else "false"}">{i + 1:02d}</button>'
-        for i in range(len(portraits)))
+    sizes = "(max-width: 720px) calc(100vw - 32px), 520px"
+    imgs = []
+    for i, (meta, info) in enumerate(portraits):
+        tag = img_tag(info, pg.t(meta["alt"]), sizes, cls="pimg on" if i == 0 else "pimg", eager=True, high=i == 0)
+        if i:  # later photos load only when they are about to be shown
+            tag = tag.replace(' src="', ' data-src="', 1).replace(' srcset="', ' data-srcset="', 1)
+        imgs.append(tag)
+    imgs = "".join(imgs)
+    arrow = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{}"/></svg>'
+    btns = (f'<button class="pbtn" type="button" data-step="-1" aria-label="{UI["prev_photo"][pg.lang]}">{arrow.format("M19 12H5m6-6-6 6 6 6")}</button>'
+            f'<button class="pbtn" type="button" data-step="1" aria-label="{UI["next_photo"][pg.lang]}">{arrow.format("M5 12h14m-6-6 6 6-6 6")}</button>')
     paras = "".join(f"<p>{esc(t)}</p>" for t in about["paragraphs"][pg.lang])
     body = f"""{header(pg)}
 <main class="about">
@@ -735,7 +742,7 @@ def build():
     logo_src = photos / "eye-white.png"
     logo = image(logo_src, (112,), lossless=True)
     eyes = image(photos / "contact-eyes.jpg", (800, 1280, 1920, 2560), quality=76)
-    portraits = [(m, image(photos / m["file"], (520, 800, 1040))) for m in site["about"]["portraits"]]
+    portraits = [(m, image(photos / m["file"], (520, 800, 1040), quality=74)) for m in site["about"]["portraits"]]
 
     posters, big_posters, stills = {}, {}, {}
     for p in projects:
