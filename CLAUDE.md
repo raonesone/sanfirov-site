@@ -13,7 +13,7 @@
 Публикация: push в `main` → GitHub Actions (`.github/workflows/deploy.yml`) собирает сайт; выкладка на GitHub Pages идёт, только если в репозитории есть переменная `PUBLISH=true`.
 
 Запуск сделан 2026-10-19: репозиторий публичный, Pages из Actions, домен sanfirov.art, PUBLISH=true. Каждый push в main сразу публикует сайт.
-DNS у reg.ru (NS ns1/ns2.hosting.reg.ru): A @ → 185.199.108.153 / 109 / 110 / 111.153, CNAME www → raonesone.github.io. Когда DNS заработает — включить HTTPS: `gh api -X PUT repos/raonesone/sanfirov-site/pages -F https_enforced=true`.
+DNS: домен зарегистрирован в reg.ru, но DNS-серверы — Cloudflare (khloe/seth.ns.cloudflare.com, аккаунт raonesone@gmail.com, бесплатный тариф). Записи там: A @ → 185.199.108–111.153, CNAME www → raonesone.github.io, TXT _github-pages-challenge-raonesone (всё «DNS only», серое облачко — не включать прокси). DNS-серверы reg.ru не отвечали серверам GitHub, поэтому сертификат не выпускался — не возвращать DNS на reg.ru. HTTPS включён (Let's Encrypt через GitHub, продлевается сам).
 
 ## Поля проекта
 
