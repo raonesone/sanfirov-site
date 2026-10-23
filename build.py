@@ -413,13 +413,13 @@ main{flex:1 0 auto}
 .pframe{position:relative;display:block;width:100%;aspect-ratio:2/3;padding:0;border:0;background:var(--bg);cursor:pointer;overflow:hidden}
 .pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:left top;opacity:0;transition:opacity .6s ease}
 .pimg.on{opacity:1}
-.pbtns{display:flex;align-items:center;gap:8px;margin-left:-10px}
-.pbtn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;background:none;border:0;color:var(--fg);cursor:pointer;transition:opacity .2s}
+.pbtns{display:flex;align-items:center;justify-content:space-between;margin:0 -5px}
+.pbtn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;padding:0;background:none;border:0;color:var(--fg);cursor:pointer;transition:opacity .2s}
 .pbtn:hover{opacity:.6}
-.pcount{margin-left:10px;font-size:13px;letter-spacing:.12em;color:var(--mute);font-variant-numeric:tabular-nums}
-.bio{flex:999 1 480px;min-width:0;max-width:760px;display:flex;flex-direction:column;gap:18px}
-.quote{margin:0 0 22px;max-width:700px;font:900 clamp(44px,4.6vw,72px)/.95 var(--cond);text-transform:uppercase}
-.bio p{margin:0;max-width:620px;font-size:18px;line-height:1.6;font-weight:300;color:var(--soft)}
+.bio{flex:999 1 480px;min-width:0;max-width:820px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.bio-text{display:flex;flex-direction:column;gap:20px;padding-bottom:4px}
+.quote{margin:-6px 0 0;max-width:800px;font:900 clamp(52px,5.6vw,92px)/.92 var(--cond);text-transform:uppercase;-webkit-text-stroke:.035em currentColor;paint-order:stroke fill}
+.bio p{margin:0;max-width:660px;font-size:clamp(18px,1.45vw,21px);line-height:1.6;font-weight:300;color:var(--soft)}
 
 .contact{position:relative;overflow-x:hidden}
 .contact>.hdr,.contact>main,.contact>.ftr{position:relative;z-index:1}
@@ -476,8 +476,9 @@ body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env
 
 .about{gap:16px;padding:8px 0 48px}
 .portrait{gap:4px;margin-bottom:12px}
-.quote{margin-bottom:8px;font-size:46px}
+.quote{margin:0 0 8px;font-size:48px}
 .bio{gap:16px}
+.bio-text{gap:16px}
 .bio p{font-size:17px}
 .bg img{object-position:10% center}
 .contact .ftr{margin-top:0;border-top:0}
@@ -678,7 +679,7 @@ def about_page(pg, portraits):
             tag = tag.replace(' src="', ' data-src="', 1).replace(' srcset="', ' data-srcset="', 1)
         imgs.append(tag)
     imgs = "".join(imgs)
-    arrow = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{}"/></svg>'
+    arrow = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{}"/></svg>'
     btns = (f'<button class="pbtn" type="button" data-step="-1" aria-label="{UI["prev_photo"][pg.lang]}">{arrow.format("M19 12H5m6-6-6 6 6 6")}</button>'
             f'<button class="pbtn" type="button" data-step="1" aria-label="{UI["next_photo"][pg.lang]}">{arrow.format("M5 12h14m-6-6 6 6-6 6")}</button>')
     paras = "".join(f"<p>{esc(t)}</p>" for t in about["paragraphs"][pg.lang])
@@ -686,11 +687,11 @@ def about_page(pg, portraits):
 <main class="about">
 <div class="portrait">
 <button class="pframe" type="button" aria-label="{UI["next_portrait"][pg.lang]}">{imgs}</button>
-<div class="pbtns" role="group" aria-label="{UI["portraits"][pg.lang]}">{btns}<span class="pcount" aria-live="polite">1 / {len(portraits)}</span></div>
+<div class="pbtns" role="group" aria-label="{UI["portraits"][pg.lang]}">{btns}</div>
 </div>
 <div class="bio">
 <blockquote class="quote">{esc(pg.t(about["quote"]))}</blockquote>
-{paras}
+<div class="bio-text">{paras}</div>
 </div>
 </main>
 {footer(pg)}"""

@@ -30,13 +30,17 @@
       ]
     },
     "portraits": [
-      { "file": "about-1.jpg", "alt": { "ru": "Александр Санфиров на съёмке в поле — чёрно-белая плёночная фотография", "en": "Alexander Sanfirov on set in a field — black-and-white film photograph" } },
-      { "file": "about-2.jpg", "alt": { "ru": "Александр Санфиров за камерой у Дома Наркомфина", "en": "Alexander Sanfirov behind the camera at the Narkomfin Building" } },
-      { "file": "about-3.jpg", "alt": { "ru": "Александр Санфиров настраивает камеру в студии", "en": "Alexander Sanfirov setting up the camera in a studio" } },
-      { "file": "about-4.jpg", "alt": { "ru": "Александр Санфиров снимает сцену в интерьере", "en": "Alexander Sanfirov filming an interior scene" } },
-      { "file": "about-5.jpg", "alt": { "ru": "Александр Санфиров с актёрами в кабриолете на площадке", "en": "Alexander Sanfirov with actors in a convertible on set" } },
-      { "file": "about-6.jpg", "alt": { "ru": "Александр Санфиров с другом во дворе — чёрно-белая плёночная фотография", "en": "Alexander Sanfirov with a friend in a courtyard — black-and-white film photograph" } },
-      { "file": "about-7.jpg", "alt": { "ru": "Александр Санфиров с камерой в пустыне", "en": "Alexander Sanfirov with a camera in the desert" } }
+      {"file": "about-1.jpg", "alt": {"ru": "Александр Санфиров на съёмке в поле — чёрно-белая плёночная фотография", "en": "Alexander Sanfirov on set in a field — black-and-white film photograph"}},
+      {"file": "about-3.jpg", "alt": {"ru": "Александр Санфиров настраивает камеру в студии", "en": "Alexander Sanfirov setting up the camera in a studio"}},
+      {"file": "about-8.jpg", "alt": {"ru": "Александр Санфиров у камеры на площадке в заброшенном цеху", "en": "Alexander Sanfirov by the camera on set in a disused hall"}},
+      {"file": "about-2.jpg", "alt": {"ru": "Александр Санфиров за камерой у Дома Наркомфина", "en": "Alexander Sanfirov behind the camera at the Narkomfin Building"}},
+      {"file": "about-7.jpg", "alt": {"ru": "Александр Санфиров с камерой в пустыне", "en": "Alexander Sanfirov with a camera in the desert"}},
+      {"file": "about-10.jpg", "alt": {"ru": "Александр Санфиров с телефоном у воздушного шара", "en": "Alexander Sanfirov with a phone by a hot-air balloon"}},
+      {"file": "about-6.jpg", "alt": {"ru": "Александр Санфиров с другом во дворе — чёрно-белая плёночная фотография", "en": "Alexander Sanfirov with a friend in a courtyard — black-and-white film photograph"}},
+      {"file": "about-9.jpg", "alt": {"ru": "Александр Санфиров готовит камеру к съёмке", "en": "Alexander Sanfirov preparing the camera for a shot"}},
+      {"file": "about-11.jpg", "alt": {"ru": "Александр Санфиров на площадке в поле", "en": "Alexander Sanfirov on set in a field"}},
+      {"file": "about-4.jpg", "alt": {"ru": "Александр Санфиров снимает сцену в интерьере", "en": "Alexander Sanfirov filming an interior scene"}},
+      {"file": "about-5.jpg", "alt": {"ru": "Александр Санфиров с актёрами в кабриолете на площадке", "en": "Alexander Sanfirov with actors in a convertible on set"}}
     ]
   },
 
