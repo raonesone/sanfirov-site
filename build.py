@@ -185,6 +185,7 @@ def find_stills(p):
 
 
 POSTER_WIDTHS = (480, 800, 1200, 1600, 1920)
+COVER_SIZES = "(max-width: 1000px) 100vw, 67vw"
 TILE_SIZES = "(max-width: 640px) calc(100vw - 32px), (max-width: 1000px) 50vw, 33vw"
 
 
@@ -302,15 +303,8 @@ def anim(name, fw, fh, height):
 def header(pg):
     return f"""<header class="hdr">
 {brand(pg)}
-{wordmark(pg)}
 <nav class="menu" aria-label="{UI["main_menu"][pg.lang]}">{nav_links(pg, "nav")}</nav>
-<button class="m-btn" type="button" data-open aria-controls="menu" aria-expanded="false">{UI["menu"][pg.lang]}</button>
-</header>
-<div class="overlay" id="menu" role="dialog" aria-modal="true" aria-label="{UI["menu"][pg.lang]}" hidden>
-<div class="hdr">{brand(pg, "div")}<button class="m-btn" type="button" data-close>{UI["close"][pg.lang]}</button></div>
-<nav class="m-list" aria-label="{UI["main_menu"][pg.lang]}">{nav_links(pg, "m-nav")}</nav>
-<div class="m-foot">{lang_switch(pg)}{social_icons(pg, "icons icons-start")}</div>
-</div>"""
+</header>"""
 
 
 LOGO = {}
@@ -332,7 +326,7 @@ FONT_FACES = "".join(
     f'@font-face{{font-family:"{family}";font-style:normal;font-weight:{weight};font-display:swap;'
     f'src:url(/fonts/{file}-{subset}.woff2) format("woff2");unicode-range:{rng}}}'
     for family, file, weight in (("Sofia Sans", "sofia-sans", "100 900"),
-                                 ("Sofia Sans Extra Condensed", "sofia-xcond", "900"))
+                                 ("Sofia Sans Extra Condensed", "sofia-xcond", "500 900"))
     for subset, rng in (
         ("cyrillic", "U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116"),
         ("latin", "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,"
@@ -340,17 +334,17 @@ FONT_FACES = "".join(
     )
 )
 
-CSS = FONT_FACES + """
+CSS = FONT_FACES + '@font-face{font-family:"Playfair Display";font-style:italic;font-weight:400 700;font-display:swap;src:url(/fonts/playfair-italic-latin.woff2) format("woff2")}' + """
 :root{--bg:#0B0B0B;--fg:#EDEDE6;--mute:#8A8A85;--soft:#D2D2CB;--accent:#EDEDE6;--line:#1C1C1A;--pad:clamp(16px,2.4vw,32px);--cond:"Sofia Sans Extra Condensed","Sofia Sans",sans-serif}
 *{box-sizing:border-box}
 html{background:var(--bg);color-scheme:dark;-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding:0 max(var(--pad),env(safe-area-inset-right)) env(safe-area-inset-bottom) max(var(--pad),env(safe-area-inset-left));background:var(--bg);color:var(--fg);font:300 16px/1.5 "Sofia Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding:0 max(var(--pad),env(safe-area-inset-right)) env(safe-area-inset-bottom) max(var(--pad),env(safe-area-inset-left));background:var(--bg);color:var(--fg);font:350 16px/1.5 "Sofia Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--fg)}
 img{display:block;max-width:100%}
 main{flex:1 0 auto}
 :focus-visible{outline:1px solid var(--fg);outline-offset:3px}
 .sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.hdr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px 32px;padding:24px 0 32px}
+.hdr{display:flex;justify-content:space-between;align-items:center;gap:16px 32px;padding:24px 0 32px}
 .hdr>.brand{justify-self:start}
 .hdr>.menu,.hdr>.m-btn{justify-self:end}
 .mark{display:block}
@@ -363,10 +357,10 @@ main{flex:1 0 auto}
 .anim.ready:hover .sp,a:focus-visible .anim.ready .sp{opacity:1;animation:play 3.2s steps(32) infinite}
 .anim.ready:hover img,a:focus-visible .anim.ready img{opacity:0}
 .brand{display:flex;flex-direction:column;gap:4px;padding:6px 0;text-decoration:none}
-.brand b{margin-right:-.6em;font-size:14px;font-weight:300;line-height:1;letter-spacing:.6em;text-transform:uppercase}
+.brand b{font-size:14px;font-weight:500;line-height:1;letter-spacing:.08em;text-transform:uppercase}
 .brand small{font-size:12px;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .menu{display:flex;gap:32px}
-.nav{display:inline-flex;align-items:center;min-height:44px;font-size:14px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--fg);transition:opacity .2s}
+.nav{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--fg);transition:opacity .2s}
 .nav:hover{opacity:.7}
 .nav[aria-current]::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px}
 .m-btn{display:none;align-items:center;min-height:44px;padding:0 2px;background:none;border:0;color:var(--fg);font:inherit;font-size:14px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
@@ -374,7 +368,7 @@ main{flex:1 0 auto}
 .overlay[hidden]{display:none}
 .overlay .hdr{display:flex;justify-content:space-between;flex-wrap:nowrap}
 .m-list{display:flex;flex-direction:column;gap:4px;padding:40px 0 48px}
-.m-nav{display:flex;align-items:center;gap:14px;min-height:60px;font:900 68px/.95 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg)}
+.m-nav{display:flex;align-items:center;gap:14px;min-height:60px;font:700 68px/.95 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg)}
 .m-nav[aria-current]::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--accent)}
 .m-foot{display:flex;flex-direction:column;gap:4px;padding-top:16px;border-top:1px solid #2A2A28}
 .lang{display:flex;gap:24px;justify-self:start}
@@ -396,17 +390,26 @@ main{flex:1 0 auto}
 .ov p{margin:0;max-width:36em;font-size:14px;line-height:1.45;font-weight:400;color:rgba(255,255,255,.92)}
 .cap{display:flex;flex-direction:column;gap:6px}
 .cap-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
-.cap-row b{font-family:var(--cond);font-size:15px;font-weight:900}
+.cap-row b{font-family:var(--cond);font-size:16px;font-weight:700;letter-spacing:.04em}
 .cap-row span{flex:none;color:var(--mute)}
 .cap-d{margin:0;font-size:14px;line-height:1.45;font-weight:400;color:#A9A9A3}
 @media (hover:hover) and (min-width:641px){
 .cap-d{display:none}
 .tile:hover .frame>img,.tile:focus-visible .frame>img{transform:scale(1.035);filter:brightness(.4)}
+.tile:hover .frame:has(>.pv):not(:has(>.ov))>img{filter:none}
+.frame>.pv{opacity:0;pointer-events:none}
+.frame>.pv.on{opacity:1}
+.tile:hover .frame>.pv{transform:scale(1.035)}
+.tile:hover .frame>.pv:has(~.ov){filter:brightness(.55)}
 .tile:hover .ov,.tile:focus-visible .ov{opacity:1;transform:none}
 }
 @media not all and (hover:hover){.frame>.ov{display:none}}
-@media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.grid{grid-template-columns:minmax(0,1fr);gap:28px}}
+.tile.cover{grid-column:span 2;grid-row:span 2}
+.tile.cover .frame{aspect-ratio:auto;flex:1;min-height:0}
+.tile.cover .cap-row b{font-size:20px}
+.tile.cover .ov p{font-size:16px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile.cover{grid-row:auto}.tile.cover .frame{aspect-ratio:16/9;flex:none}}
+@media (max-width:640px){.grid{grid-template-columns:minmax(0,1fr);gap:28px}.tile.cover{grid-column:auto}}
 
 .about{display:flex;flex-wrap:wrap;gap:48px 64px;padding:24px 0 88px}
 .portrait{flex:1 1 340px;max-width:520px;display:flex;flex-direction:column;gap:8px}
@@ -418,8 +421,8 @@ main{flex:1 0 auto}
 .pbtn:hover{opacity:.6}
 .bio{flex:999 1 480px;min-width:0;max-width:820px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
 .bio-text{display:flex;flex-direction:column;gap:20px;padding-bottom:4px}
-.quote{margin:-6px 0 0;max-width:800px;font:900 clamp(52px,5.6vw,92px)/.92 var(--cond);text-transform:uppercase;-webkit-text-stroke:.035em currentColor;paint-order:stroke fill}
-.bio p{margin:0;max-width:660px;font-size:clamp(18px,1.45vw,21px);line-height:1.6;font-weight:300;color:var(--soft)}
+.quote{margin:-6px 0 0;max-width:800px;font:700 clamp(50px,5.3vw,88px)/.94 var(--cond);text-transform:uppercase}
+.bio p{margin:0;max-width:660px;font-size:clamp(18px,1.45vw,21px);line-height:1.6;font-weight:350;color:var(--soft)}
 
 .contact{position:relative;overflow-x:hidden}
 .contact>.hdr,.contact>main,.contact>.ftr{position:relative;z-index:1}
@@ -433,10 +436,12 @@ main{flex:1 0 auto}
 .label{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#CFCFC8}
 .socials{display:flex;flex-direction:column}
 .socials .label{padding-bottom:10px}
-.soc{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 0 8px;border-bottom:1px solid rgba(237,237,230,.3);font:900 clamp(56px,6.4vw,96px)/.9 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg);transition:padding-left .35s ease}
+.soc{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 0 8px;border-bottom:1px solid rgba(237,237,230,.3);font:700 clamp(56px,6.4vw,96px)/.9 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg);transition:padding-left .35s ease}
 .soc:hover{padding-left:16px}
 .soc svg{flex:none;width:40px;height:40px}
-.soc-mail{font-size:clamp(44px,5vw,76px)}
+.soc-tq .tq{display:block;height:1.25em;width:auto;margin:-.14em 0 -.16em}
+.soc-mail{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(28px,2.6vw,40px);text-transform:none;letter-spacing:0;padding-top:16px;padding-bottom:12px}
+.soc-mail svg{width:30px;height:30px}
 .agency{display:flex;flex-wrap:wrap;align-items:center;gap:0 24px;font-size:17px}
 .c-link{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;transition:opacity .2s}
 .c-link:hover{opacity:.7}
@@ -450,9 +455,9 @@ main{flex:1 0 auto}
 .play-ic{position:absolute;left:50%;top:50%;display:flex;align-items:center;justify-content:center;width:88px;height:88px;margin:-44px 0 0 -44px;padding-left:4px;border:1px solid rgba(237,237,230,.7);border-radius:50%;background:rgba(11,11,11,.25);transition:transform .3s}
 .play:hover .play-ic{transform:scale(1.06)}
 .pinfo{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px 64px;padding-top:40px}
-.ptitle{margin:0;font:900 clamp(56px,7vw,112px)/.9 var(--cond);text-transform:uppercase}
+.ptitle{margin:0;font:700 clamp(56px,7vw,112px)/.9 var(--cond);text-transform:uppercase}
 .pmeta{margin:14px 0 0;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
-.ptext{margin:24px 0 0;max-width:620px;font-size:18px;line-height:1.6;font-weight:300;color:var(--soft)}
+.ptext{margin:24px 0 0;max-width:620px;font-size:18px;line-height:1.6;font-weight:350;color:var(--soft)}
 .credits{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 24px;align-content:start;padding-top:8px;font-size:16px}
 .credits dt{font-size:12px;line-height:24px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .credits dd{margin:0}
@@ -461,17 +466,18 @@ main{flex:1 0 auto}
 .pnav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:64px;padding-top:12px;border-top:1px solid var(--line)}
 
 .e404{display:flex;flex-direction:column;justify-content:center;gap:24px}
-.e404 h1{margin:0;font:900 clamp(96px,18vw,240px)/.85 var(--cond)}
+.e404 h1{margin:0;font:700 clamp(96px,18vw,240px)/.85 var(--cond)}
 
 @media (max-width:720px){
 body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 .hdr{display:flex;justify-content:space-between;flex-wrap:nowrap;padding:14px 0 18px}
 .hdr>.mark{display:none}
 .brand{gap:3px;padding:4px 0}
-.brand b{font-size:14px;letter-spacing:.5em;margin-right:-.5em}
+.brand b{font-size:14px}
 .brand small{font-size:11px}
-.hdr .menu{display:none}
-.m-btn{display:inline-flex}
+.hdr .menu{gap:20px}
+.hdr .menu .nav:first-child{display:none}
+.nav[aria-current]::before{width:5px;height:5px;margin-right:6px}
 .ftr{margin-top:32px;padding:20px 0 16px;border-top:1px solid var(--line)}
 
 .about{gap:16px;padding:8px 0 48px}
@@ -484,7 +490,8 @@ body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env
 .contact .ftr{margin-top:0;border-top:0}
 .soc{gap:16px;padding:10px 0 6px;font-size:64px}
 .soc svg{width:34px;height:34px}
-.soc-mail{font-size:min(64px,calc((100vw - 32px)/6.9))}
+.soc-mail{font-size:28px}
+.soc-mail svg{width:26px;height:26px}
 .socials .label{padding-bottom:8px;font-size:12px}
 .agency{gap:0 20px}
 .agency .label{flex:1 0 100%;font-size:12px}
@@ -504,7 +511,7 @@ body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env
 .lb-t{flex:1;min-width:0;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
 .lb-nav{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;background:none;border:0;color:var(--fg);cursor:pointer;transition:opacity .2s}
 .lb-nav:hover{opacity:.6}
-.lb-cap b{font:900 20px/1 var(--cond)}
+.lb-cap b{font:700 20px/1 var(--cond)}
 .lb-cap span{color:var(--mute)}
 .lb-x{position:absolute;top:calc(12px + env(safe-area-inset-top));right:var(--pad);display:inline-flex;align-items:center;min-height:44px;padding:0;background:none;border:0;color:var(--fg);font:inherit;font-size:14px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
 .lb-x:hover{opacity:.7}
@@ -558,6 +565,11 @@ else if(e.key==='Tab'){var fs=[].slice.call(lb.querySelectorAll('button,iframe')
 if(e.shiftKey&&k<=0){e.preventDefault();fs[fs.length-1].focus()}else if(!e.shiftKey&&(k===fs.length-1||k<0)){e.preventDefault();fs[0].focus()}}})}
 function warmAnim(){d.querySelectorAll('.anim[data-sprite]').forEach(function(a){var sp=a.querySelector('.sp'),u=a.dataset.sprite,i=new Image();i.onload=function(){sp.style.backgroundImage='url('+u+')';a.classList.add('ready')};i.src=u})}
 addEventListener('load',function(){setTimeout(warmAnim,800)});
+if(matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches){
+d.querySelectorAll('.tile').forEach(function(t){var v=t.querySelector('.pv');if(!v)return;
+v.addEventListener('playing',function(){if(t.matches(':hover'))v.classList.add('on')});
+t.addEventListener('pointerenter',function(){if(!v.src)v.src=v.dataset.src;var p=v.play();if(p&&p.catch)p.catch(function(){})});
+t.addEventListener('pointerleave',function(){v.classList.remove('on');v.pause()})})}
 d.querySelectorAll('.frame>img').forEach(function(i){function ok(){i.classList.add('ld')}if(i.complete&&i.naturalWidth)ok();else{i.addEventListener('load',ok);i.addEventListener('error',ok)}});
 })();"""
 
@@ -622,13 +634,13 @@ def write(path, text):
 
 # ---------------------------------------------------------------- pages
 
-def frame(p, poster, alt, eager=False, high=False, overlay=""):
+def frame(p, poster, alt, eager=False, high=False, overlay="", sizes=None, preview=""):
     if not poster:
         return f'<div class="frame"><div style="background:{p["color"]}"></div>{overlay}</div>'
     style = f'object-position:{esc(p["focus"])}' if p.get("focus") else ""
     bg = f' style="background-image:url({poster["lqip"]})"' if poster.get("lqip") else ""
-    return (f'<div class="frame"{bg}>{img_tag(poster, alt, TILE_SIZES, eager=eager, high=high, style=style)}'
-            f'{overlay}</div>')
+    return (f'<div class="frame"{bg}>{img_tag(poster, alt, sizes or TILE_SIZES, eager=eager, high=high, style=style)}'
+            f'{preview}{overlay}</div>')
 
 
 def meta_line(pg, p):
@@ -644,6 +656,14 @@ def lightbox_attrs(pg, p):
             f' data-meta="{esc(meta)}"')
 
 
+def hover_video(p):
+    """Short silent loop played on hover (desktop only), loaded on first hover."""
+    if not (STATIC / "hover" / f'{p["slug"]}.mp4').exists():
+        return ""
+    return (f'<video class="pv" data-src="/hover/{p["slug"]}.mp4" muted loop playsinline '
+            f'preload="none" aria-hidden="true" tabindex="-1"></video>')
+
+
 def work_page(pg, projects, posters, logo):
     tiles = []
     for i, p in enumerate(projects):
@@ -652,8 +672,8 @@ def work_page(pg, projects, posters, logo):
         overlay = f'<div class="ov"><p>{esc(text)}</p></div>' if text else ""
         desc = f'<p class="cap-d">{esc(text)}</p>' if text else ""
         tiles.append(
-            f'<a class="tile" href="{pg.url("project:" + p["slug"])}"{lightbox_attrs(pg, p)}>'
-            f'{frame(p, posters[p["slug"]], title, eager=i < 3, high=i == 0, overlay=overlay)}'
+            f'<a class="tile{" cover" if i == 0 else ""}" href="{pg.url("project:" + p["slug"])}"{lightbox_attrs(pg, p)}>'
+            f'{frame(p, posters[p["slug"]], title, eager=i < 3, high=i == 0, overlay=overlay, sizes=COVER_SIZES if i == 0 else None, preview=hover_video(p))}'
             f'<div class="cap"><div class="cap-row"><b>{esc(title)}</b><span>{meta_line(pg, p)}</span></div>{desc}</div></a>')
     body = f"""{header(pg)}
 <main>
@@ -664,7 +684,7 @@ def work_page(pg, projects, posters, logo):
 </main>
 {footer(pg, logo=logo)}"""
     first = posters[projects[0]["slug"]] if projects else None
-    preload = dict(first, sizes=TILE_SIZES) if first else None
+    preload = dict(first, sizes=COVER_SIZES) if first else None
     title = f'{pg.t(pg.site["name"])} — {pg.t(pg.site["role"])}'
     write(pg.url("work"), document(pg, title, body, og_image=first and first["src"], preload_img=preload))
 
@@ -699,6 +719,9 @@ def about_page(pg, portraits):
     write(pg.url("about"), document(pg, title, body, og_image=portraits[0][1]["src"]))
 
 
+TATIQUE_SVG = (STATIC / "tatique.svg").read_text(encoding="utf-8").replace("<svg ", '<svg class="tq" ', 1)
+
+
 def contact_page(pg, eyes):
     site = pg.site
     socials = "".join(f'<a class="soc" href="{esc(s["url"])}">{esc(s["name"])}{icon(s["name"], 40, 1.6)}</a>'
@@ -710,7 +733,7 @@ def contact_page(pg, eyes):
 <div class="cbox">
 <nav class="socials" aria-label="{UI["social"][pg.lang]}"><span class="label">{UI["social"][pg.lang]}</span>{socials}</nav>
 <nav class="socials" aria-label="{esc(pg.t(ag["label"]))}"><span class="label">{esc(pg.t(ag["label"]))}</span>
-<a class="soc" href="{esc(ag["url"])}">{esc(ag["name"])}{icon("Arrow", 40, 1.6)}</a>
+<a class="soc soc-tq" href="{esc(ag["url"])}" aria-label="{esc(ag["name"])}">{TATIQUE_SVG}{icon("Arrow", 40, 1.6)}</a>
 <a class="soc soc-mail" href="mailto:{esc(ag["email"])}">{esc(ag["email"])}{icon("Mail", 40, 1.6)}</a></nav>
 </div>
 </main>
