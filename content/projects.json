@@ -10,7 +10,7 @@
   {
     "slug": "shar",
     "title": {"ru": "Скайрайдер",  "en": "Skyrider"},
-    "type": {"ru": "Экшн-реклама",  "en": "Action Commercial"},
+    "type": {"ru": "Экшн",  "en": "Action"},
     "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/iKLRZfUcLTLheLcqNmPsKF"
@@ -34,7 +34,7 @@
   {
     "slug": "dobroshrift",
     "title": {"ru": "L'ONE — Доброшрифт",  "en": "L'ONE — Dobroshrift"},
-    "type": {"ru": "Клип / Социальный",  "en": "Music / Social"},
+    "type": {"ru": "Социальный",  "en": "Social"},
     "year": 2021,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/xkttXbGY2Rav22mGcQG8nH"
@@ -46,6 +46,28 @@
     "year": 2026,
     "text": {"ru": "",  "en": ""},
     "kinescope": "https://kinescope.io/wopCbQPT1TbT7ZzLhbKG4G"
+  },
+  {
+    "slug": "leto",
+    "title": {"ru": "Лето",  "en": "Leto"},
+    "type": {"ru": "Клип",  "en": "Music"},
+    "year": 2020,
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/ojfsxqfBCrNiTfGwpyPNV7"
+  },
+  {
+    "slug": "restaurants",
+    "title": {"ru": "Рестораны Москвы",  "en": "Moscow Restaurants"},
+    "type": {"ru": "Документальный",  "en": "Documentary"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/eWpJ9KRvmtwtwChWku8mRy"
+  },
+  {
+    "slug": "shulz",
+    "title": {"ru": "Shulz",  "en": "Shulz"},
+    "type": {"ru": "Реклама",  "en": "Commercial"},
+    "text": {"ru": "",  "en": ""},
+    "kinescope": "https://kinescope.io/dvvK2ZMzgUt6qLno64nAfU"
   },
   {
     "slug": "tanaker",

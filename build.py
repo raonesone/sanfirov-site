@@ -7,7 +7,9 @@
     python3 build.py            собрать сайт
     python3 build.py --serve    собрать и открыть на http://localhost:8000
 """
+import base64
 import functools
+import io
 import hashlib
 import html
 import http.server
@@ -24,8 +26,8 @@ STATIC = ROOT / "static"
 OUT = ROOT / "_site"
 CACHE = ROOT / ".cache" / "img"
 
-LANGS = ("ru", "en")
-PREFIX = {"ru": "", "en": "/en"}
+LANGS = ("en", "ru")
+PREFIX = {"en": "", "ru": "/ru"}
 PLACEHOLDER_COLORS = ["#1F2B34", "#3A2B23", "#2B3227", "#262236", "#3D3423", "#1E302F",
                       "#35221E", "#2F2F2C", "#252B37", "#362A2F", "#1D2630", "#312A1F"]
 IMAGE_EXT = (".jpg", ".jpeg", ".png", ".webp")
@@ -130,8 +132,13 @@ def image(src, widths, quality=80, lossless=False):
                     small.save(cached, "WEBP", quality=quality, method=6)
             shutil.copyfile(cached, OUT / "img" / name)
             variants.append((f"/img/{name}", w, h))
+        tiny = im.resize((24, max(1, round(24 * im.height / im.width))), Image.LANCZOS)
+        buf = io.BytesIO()
+        tiny.convert("RGB").save(buf, "WEBP", quality=50)
+        lqip = "data:image/webp;base64," + base64.b64encode(buf.getvalue()).decode()
     url, w, h = variants[-1]
     return {
+        "lqip": lqip,
         "src": url,
         "srcset": ", ".join(f"{u} {vw}w" for u, vw, _ in variants),
         "w": w,
@@ -207,6 +214,9 @@ UI = {
     "social": {"ru": "Соцсети", "en": "Social"},
     "home": {"ru": "на главную", "en": "home"},
     "portraits": {"ru": "Фотографии", "en": "Photos"},
+    "portfolio": {"ru": "Портфолио", "en": "Portfolio"},
+    "prev_work": {"ru": "Предыдущая работа", "en": "Previous work"},
+    "next_work": {"ru": "Следующая работа", "en": "Next work"},
     "prev_photo": {"ru": "Предыдущее фото", "en": "Previous photo"},
     "next_photo": {"ru": "Следующее фото", "en": "Next photo"},
     "next_portrait": {"ru": "Следующее фото", "en": "Next photo"},
@@ -269,9 +279,30 @@ def brand(pg, tag="a"):
             f'<b>{esc(pg.t(pg.site["brand"]))}</b></{tag}>')
 
 
+WORDMARK = {}
+
+
+def wordmark(pg):
+    name = f"portfolio-{pg.lang}"
+    w, h = ANIM[name]
+    return (f'<a class="mark" href="{pg.url("work")}" aria-label="{esc(UI["portfolio"][pg.lang])}">'
+            f'{anim(name, w, h, 30)}</a>')
+
+
+# Hand-drawn loops: 32 frames in one horizontal strip; static first frame until hovered.
+ANIM = {"eye": (166, 84), "portfolio-ru": (271, 60), "portfolio-en": (237, 60)}
+
+
+def anim(name, fw, fh, height):
+    width = round(height * fw / fh)
+    return (f'<span class="anim" data-sprite="/anim/{name}.webp" style="width:{width}px;height:{height}px">'
+            f'<img src="/anim/{name}-0.webp" alt="" width="{width}" height="{height}"><span class="sp"></span></span>')
+
+
 def header(pg):
     return f"""<header class="hdr">
 {brand(pg)}
+{wordmark(pg)}
 <nav class="menu" aria-label="{UI["main_menu"][pg.lang]}">{nav_links(pg, "nav")}</nav>
 <button class="m-btn" type="button" data-open aria-controls="menu" aria-expanded="false">{UI["menu"][pg.lang]}</button>
 </header>
@@ -282,12 +313,15 @@ def header(pg):
 </div>"""
 
 
+LOGO = {}
+
+
 def footer(pg, logo=None, icons=True):
+    logo = logo or LOGO or None
     middle = ""
     if logo:
         label = f'{esc(pg.t(pg.site["name"]))} — {UI["home"][pg.lang]}'
-        middle = (f'<a class="logo" href="{pg.url("work")}" aria-label="{label}">'
-                  f'<img src="{logo["src"]}" alt="" width="56" height="{round(56 * logo["h"] / logo["w"])}"></a>')
+        middle = f'<a class="logo" href="{pg.url("work")}" aria-label="{label}">{anim("eye", *ANIM["eye"], 28)}</a>'
     right = social_icons(pg) if icons else ""
     return f'<footer class="ftr">{lang_switch(pg)}{middle or "<span></span>"}{right}</footer>'
 
@@ -310,13 +344,24 @@ CSS = FONT_FACES + """
 :root{--bg:#0B0B0B;--fg:#EDEDE6;--mute:#8A8A85;--soft:#D2D2CB;--accent:#EDEDE6;--line:#1C1C1A;--pad:clamp(16px,2.4vw,32px);--cond:"Sofia Sans Extra Condensed","Sofia Sans",sans-serif}
 *{box-sizing:border-box}
 html{background:var(--bg);color-scheme:dark;-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding:0 var(--pad);background:var(--bg);color:var(--fg);font:300 16px/1.5 "Sofia Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding:0 max(var(--pad),env(safe-area-inset-right)) env(safe-area-inset-bottom) max(var(--pad),env(safe-area-inset-left));background:var(--bg);color:var(--fg);font:300 16px/1.5 "Sofia Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--fg)}
 img{display:block;max-width:100%}
 main{flex:1 0 auto}
 :focus-visible{outline:1px solid var(--fg);outline-offset:3px}
 .sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px 32px;padding:24px 0 32px}
+.hdr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px 32px;padding:24px 0 32px}
+.hdr>.brand{justify-self:start}
+.hdr>.menu,.hdr>.m-btn{justify-self:end}
+.mark{display:block}
+@keyframes jitter{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(-1.5px,1px) rotate(-1.2deg)}50%{transform:translate(1.5px,-1px) rotate(.9deg)}75%{transform:translate(-1px,-1.5px) rotate(.6deg)}100%{transform:translate(1px,1.5px) rotate(-.7deg)}}
+.anim{position:relative;display:block}
+.anim>*{position:absolute;inset:0;width:100%;height:100%}
+.anim .sp{background-repeat:no-repeat;background-size:3200% 100%;opacity:0}
+@keyframes play{from{background-position:0 0}to{background-position:103.2258% 0}}
+.mark:hover .anim,.mark:focus-visible .anim,.logo:hover .anim,.logo:focus-visible .anim{animation:jitter .32s steps(1,end) infinite}
+.anim.ready:hover .sp,a:focus-visible .anim.ready .sp{opacity:1;animation:play 3.2s steps(32) infinite}
+.anim.ready:hover img,a:focus-visible .anim.ready img{opacity:0}
 .brand{display:flex;flex-direction:column;gap:4px;padding:6px 0;text-decoration:none}
 .brand b{margin-right:-.6em;font-size:14px;font-weight:300;line-height:1;letter-spacing:.6em;text-transform:uppercase}
 .brand small{font-size:12px;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
@@ -325,9 +370,9 @@ main{flex:1 0 auto}
 .nav:hover{opacity:.7}
 .nav[aria-current]::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px}
 .m-btn{display:none;align-items:center;min-height:44px;padding:0 2px;background:none;border:0;color:var(--fg);font:inherit;font-size:14px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
-.overlay{position:fixed;inset:0;z-index:20;padding:0 16px;background:var(--bg);display:flex;flex-direction:column;overflow:auto}
+.overlay{position:fixed;inset:0;z-index:20;padding:env(safe-area-inset-top) max(16px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(16px,env(safe-area-inset-left));background:var(--bg);display:flex;flex-direction:column;overflow:auto}
 .overlay[hidden]{display:none}
-.overlay .hdr{flex-wrap:nowrap}
+.overlay .hdr{display:flex;justify-content:space-between;flex-wrap:nowrap}
 .m-list{display:flex;flex-direction:column;gap:4px;padding:40px 0 48px}
 .m-nav{display:flex;align-items:center;gap:14px;min-height:60px;font:900 68px/.95 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg)}
 .m-nav[aria-current]::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--accent)}
@@ -338,30 +383,30 @@ main{flex:1 0 auto}
 .icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--fg);transition:opacity .2s}
 .icon:hover{opacity:.7}
 .ftr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:8px 24px;padding:40px 0 20px}
-.logo{display:inline-flex;align-items:center;justify-content:center;min-height:44px;transition:opacity .2s}
-.logo:hover{opacity:.7}
-.logo img{width:56px;height:auto}
+.logo{display:inline-flex;align-items:center;justify-content:center;min-height:44px}
 
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.tile{position:relative;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#fff}
-.frame{position:relative;aspect-ratio:16/9;overflow:hidden;background:#151514}
-.frame>*{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .4s}
+
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 8px}
+.tile{position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:#fff}
+.frame{position:relative;aspect-ratio:16/9;overflow:hidden;background:#151514 center/cover no-repeat}
+.frame>*{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .4s,opacity .6s ease}
+.js .frame>img:not(.ld){opacity:0}
+.frame::before{content:"";position:absolute;inset:-24px;background:inherit;filter:blur(16px)}
+.frame>.ov{inset:auto 0 0;height:auto;padding:16px;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s;pointer-events:none}
+.ov p{margin:0;max-width:36em;font-size:14px;line-height:1.45;font-weight:400;color:rgba(255,255,255,.92)}
 .cap{display:flex;flex-direction:column;gap:6px}
-.cap-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
-.cap-row b{font-family:var(--cond);font-weight:900}
+.cap-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.cap-row b{font-family:var(--cond);font-size:15px;font-weight:900}
 .cap-row span{flex:none;color:var(--mute)}
-.cap p{margin:0;font-size:14px;line-height:1.45;color:#A9A9A3}
+.cap-d{margin:0;font-size:14px;line-height:1.45;font-weight:400;color:#A9A9A3}
 @media (hover:hover) and (min-width:641px){
-.tile{display:block}
-.cap{position:absolute;left:16px;right:16px;bottom:14px;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s;pointer-events:none}
-.cap-row{font-size:15px}
-.cap-row span{color:rgba(255,255,255,.75)}
-.cap p{max-width:36em;font-size:13px;letter-spacing:.01em;color:rgba(255,255,255,.85)}
-.tile:hover .frame>*,.tile:focus-visible .frame>*{transform:scale(1.035);filter:brightness(.45)}
-.tile:hover .cap,.tile:focus-visible .cap{opacity:1;transform:none}
+.cap-d{display:none}
+.tile:hover .frame>img,.tile:focus-visible .frame>img{transform:scale(1.035);filter:brightness(.4)}
+.tile:hover .ov,.tile:focus-visible .ov{opacity:1;transform:none}
 }
+@media not all and (hover:hover){.frame>.ov{display:none}}
 @media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.grid{grid-template-columns:minmax(0,1fr);gap:24px}}
+@media (max-width:640px){.grid{grid-template-columns:minmax(0,1fr);gap:28px}}
 
 .about{display:flex;flex-wrap:wrap;gap:48px 64px;padding:24px 0 88px}
 .portrait{flex:1 1 340px;max-width:520px;display:flex;flex-direction:column;gap:8px}
@@ -371,9 +416,10 @@ main{flex:1 0 auto}
 .pbtns{display:flex;align-items:center;gap:8px;margin-left:-10px}
 .pbtn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;background:none;border:0;color:var(--fg);cursor:pointer;transition:opacity .2s}
 .pbtn:hover{opacity:.6}
+.pcount{margin-left:10px;font-size:13px;letter-spacing:.12em;color:var(--mute);font-variant-numeric:tabular-nums}
 .bio{flex:999 1 480px;min-width:0;max-width:760px;display:flex;flex-direction:column;gap:18px}
 .quote{margin:0 0 22px;max-width:700px;font:900 clamp(44px,4.6vw,72px)/.95 var(--cond);text-transform:uppercase}
-.bio p{margin:0;max-width:620px;font-size:18px;line-height:1.6;font-weight:200;color:var(--soft)}
+.bio p{margin:0;max-width:620px;font-size:18px;line-height:1.6;font-weight:300;color:var(--soft)}
 
 .contact{position:relative;overflow-x:hidden}
 .contact>.hdr,.contact>main,.contact>.ftr{position:relative;z-index:1}
@@ -390,7 +436,7 @@ main{flex:1 0 auto}
 .soc{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 0 8px;border-bottom:1px solid rgba(237,237,230,.3);font:900 clamp(56px,6.4vw,96px)/.9 var(--cond);text-transform:uppercase;text-decoration:none;color:var(--fg);transition:padding-left .35s ease}
 .soc:hover{padding-left:16px}
 .soc svg{flex:none;width:40px;height:40px}
-.soc-mail{font-size:clamp(40px,4.4vw,68px);text-transform:none}
+.soc-mail{font-size:clamp(44px,5vw,76px)}
 .agency{display:flex;flex-wrap:wrap;align-items:center;gap:0 24px;font-size:17px}
 .c-link{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;transition:opacity .2s}
 .c-link:hover{opacity:.7}
@@ -406,7 +452,7 @@ main{flex:1 0 auto}
 .pinfo{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px 64px;padding-top:40px}
 .ptitle{margin:0;font:900 clamp(56px,7vw,112px)/.9 var(--cond);text-transform:uppercase}
 .pmeta{margin:14px 0 0;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
-.ptext{margin:24px 0 0;max-width:620px;font-size:18px;line-height:1.6;font-weight:200;color:var(--soft)}
+.ptext{margin:24px 0 0;max-width:620px;font-size:18px;line-height:1.6;font-weight:300;color:var(--soft)}
 .credits{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 24px;align-content:start;padding-top:8px;font-size:16px}
 .credits dt{font-size:12px;line-height:24px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .credits dd{margin:0}
@@ -418,15 +464,16 @@ main{flex:1 0 auto}
 .e404 h1{margin:0;font:900 clamp(96px,18vw,240px)/.85 var(--cond)}
 
 @media (max-width:720px){
-body{padding:0 16px}
-.hdr{flex-wrap:nowrap;padding:14px 0 18px}
+body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.hdr{display:flex;justify-content:space-between;flex-wrap:nowrap;padding:14px 0 18px}
+.hdr>.mark{display:none}
 .brand{gap:3px;padding:4px 0}
 .brand b{font-size:14px;letter-spacing:.5em;margin-right:-.5em}
 .brand small{font-size:11px}
 .hdr .menu{display:none}
 .m-btn{display:inline-flex}
 .ftr{margin-top:32px;padding:20px 0 16px;border-top:1px solid var(--line)}
-.logo img{width:44px}
+
 .about{gap:16px;padding:8px 0 48px}
 .portrait{gap:4px;margin-bottom:12px}
 .quote{margin-bottom:8px;font-size:46px}
@@ -436,7 +483,7 @@ body{padding:0 16px}
 .contact .ftr{margin-top:0;border-top:0}
 .soc{gap:16px;padding:10px 0 6px;font-size:64px}
 .soc svg{width:34px;height:34px}
-.soc-mail{font-size:40px}
+.soc-mail{font-size:min(64px,calc((100vw - 32px)/6.9))}
 .socials .label{padding-bottom:8px;font-size:12px}
 .agency{gap:0 20px}
 .agency .label{flex:1 0 100%;font-size:12px}
@@ -447,18 +494,21 @@ body{padding:0 16px}
 .stills{grid-template-columns:minmax(0,1fr);margin-top:40px}
 .pnav{margin-top:40px}
 }
-.lb{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:64px var(--pad) 32px;background:rgba(11,11,11,.96);opacity:0;transition:opacity .25s}
+.lb{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:calc(64px + env(safe-area-inset-top)) max(var(--pad),env(safe-area-inset-right)) calc(32px + env(safe-area-inset-bottom)) max(var(--pad),env(safe-area-inset-left));background:rgba(11,11,11,.96);opacity:0;transition:opacity .25s}
 .lb.on{opacity:1}
 .lb-box{width:min(100%,calc((100vh - 170px)*16/9))}
 .lb-video{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:14px;background:#000;isolation:isolate}
 .lb-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;color-scheme:dark}
-.lb-cap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:14px;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.lb-cap{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.lb-t{flex:1;min-width:0;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.lb-nav{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;background:none;border:0;color:var(--fg);cursor:pointer;transition:opacity .2s}
+.lb-nav:hover{opacity:.6}
 .lb-cap b{font:900 20px/1 var(--cond)}
 .lb-cap span{color:var(--mute)}
-.lb-x{position:absolute;top:12px;right:var(--pad);display:inline-flex;align-items:center;min-height:44px;padding:0;background:none;border:0;color:var(--fg);font:inherit;font-size:14px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
+.lb-x{position:absolute;top:calc(12px + env(safe-area-inset-top));right:var(--pad);display:inline-flex;align-items:center;min-height:44px;padding:0;background:none;border:0;color:var(--fg);font:inherit;font-size:14px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
 .lb-x:hover{opacity:.7}
 @media (max-width:720px){.lb{padding:64px 16px 24px}.lb-cap b{font-size:18px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 """
 
 JS = """(function(){var d=document;
@@ -474,25 +524,40 @@ f.allow='autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; a
 f.title=b.getAttribute('aria-label');p.replaceChildren(f)}});
 var pf=d.querySelector('.pframe');if(pf){var im=pf.querySelectorAll('.pimg'),n=im.length,cur=0;
 function load(k){var x=im[(k+n)%n];if(x.dataset.src){if(x.dataset.srcset)x.srcset=x.dataset.srcset;x.src=x.dataset.src;delete x.dataset.src;delete x.dataset.srcset}}
-function show(k){cur=(k+n)%n;load(cur);load(cur+1);load(cur-1);im.forEach(function(x,q){x.classList.toggle('on',q===cur)})}
-pf.onclick=function(){show(cur+1)};d.querySelectorAll('.pbtn').forEach(function(x){x.onclick=function(){show(cur+(+x.dataset.step))}});
+var pc=d.querySelector('.pcount');
+function show(k){cur=(k+n)%n;load(cur);load(cur+1);load(cur-1);im.forEach(function(x,q){x.classList.toggle('on',q===cur)});if(pc)pc.textContent=(cur+1)+' / '+n}
+pf.onclick=function(){if(sw){sw=0;return}show(cur+1)};d.querySelectorAll('.pbtn').forEach(function(x){x.onclick=function(){show(cur+(+x.dataset.step))}});
+var sx=0,sw=0;pf.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+pf.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40){sw=1;show(cur+(dx<0?1:-1))}},{passive:true});
 addEventListener('load',function(){load(1);load(n-1)})}
-var g=d.querySelector('.grid[data-lb]');if(g){var lb=null,last=null,pushed=0,hot=0;
+var g=d.querySelector('.grid[data-lb]');if(g){var lb=null,last=null,pushed=0,hot=0,idx=0,tiles=[].slice.call(g.querySelectorAll('a.tile[data-kinescope]'));
+var AR='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="';
 function heat(){if(hot)return;hot=1;var l=d.createElement('link');l.rel='preconnect';l.href='https://kinescope.io';d.head.appendChild(l)}
 g.addEventListener('pointerover',heat);g.addEventListener('focusin',heat);
 function close(back){if(!lb)return;lb.remove();lb=null;d.body.style.overflow='';if(last)last.focus({preventScroll:true});if(back&&pushed){pushed=0;history.back()}}
-g.addEventListener('click',function(e){var a=e.target.closest('a.tile[data-kinescope]');
-if(!a||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button)return;e.preventDefault();close(0);last=a;
-lb=d.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.setAttribute('aria-label',a.dataset.title);
-lb.innerHTML='<button class="lb-x" type="button"></button><div class="lb-box"><div class="lb-video"><iframe allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write" allowfullscreen></iframe></div><div class="lb-cap"><b></b><span></span></div></div>';
-var x=lb.querySelector('.lb-x'),f=lb.querySelector('iframe');x.textContent=g.dataset.close;
-lb.querySelector('b').textContent=a.dataset.title;lb.querySelector('.lb-cap span').textContent=a.dataset.meta;
-f.title=a.dataset.title;f.src='https://kinescope.io/embed/'+a.dataset.kinescope+'?autoplay=1';
+function show(i){idx=(i+tiles.length)%tiles.length;var a=tiles[idx],f=lb.querySelector('iframe');last=a;
+lb.setAttribute('aria-label',a.dataset.title);lb.querySelector('.lb-t b').textContent=a.dataset.title;lb.querySelector('.lb-t span').textContent=a.dataset.meta;
+f.title=a.dataset.title;f.src='https://kinescope.io/embed/'+a.dataset.kinescope+'?autoplay=1';if(pushed)history.replaceState({lb:1},'',a.href)}
+function open(a){close(0);lb=d.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');
+lb.innerHTML='<button class="lb-x" type="button"></button><div class="lb-box"><div class="lb-video"><iframe allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write" allowfullscreen></iframe></div><div class="lb-cap"><button class="lb-nav" type="button" data-d="-1">'+AR+'M19 12H5m6-6-6 6 6 6"/></svg></button><div class="lb-t"><b></b><span></span></div><button class="lb-nav" type="button" data-d="1">'+AR+'M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div>';
+var x=lb.querySelector('.lb-x'),nv=lb.querySelectorAll('.lb-nav');x.textContent=g.dataset.close;
+nv[0].setAttribute('aria-label',g.dataset.prev);nv[1].setAttribute('aria-label',g.dataset.next);
+nv.forEach(function(b){b.onclick=function(){show(idx+(+b.dataset.d))}});
 x.onclick=function(){close(1)};lb.addEventListener('click',function(ev){if(ev.target===lb||ev.target.classList.contains('lb-box'))close(1)});
-d.body.appendChild(lb);d.body.style.overflow='hidden';requestAnimationFrame(function(){lb&&lb.classList.add('on')});x.focus();
-history.pushState({lb:1},'',a.href);pushed=1});
+var tx=0;lb.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+lb.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)show(idx+(dx<0?1:-1))},{passive:true});
+d.body.appendChild(lb);d.body.style.overflow='hidden';history.pushState({lb:1},'',a.href);pushed=1;show(tiles.indexOf(a));
+requestAnimationFrame(function(){lb&&lb.classList.add('on')});x.focus()}
+g.addEventListener('click',function(e){var a=e.target.closest('a.tile[data-kinescope]');
+if(!a||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button)return;e.preventDefault();open(a)});
 addEventListener('popstate',function(){pushed=0;close(0)});
-d.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb)close(1)})}
+d.addEventListener('keydown',function(e){if(!lb)return;
+if(e.key==='Escape')close(1);else if(e.key==='ArrowRight')show(idx+1);else if(e.key==='ArrowLeft')show(idx-1);
+else if(e.key==='Tab'){var fs=[].slice.call(lb.querySelectorAll('button,iframe')),k=fs.indexOf(d.activeElement);
+if(e.shiftKey&&k<=0){e.preventDefault();fs[fs.length-1].focus()}else if(!e.shiftKey&&(k===fs.length-1||k<0)){e.preventDefault();fs[0].focus()}}})}
+function warmAnim(){d.querySelectorAll('.anim[data-sprite]').forEach(function(a){var sp=a.querySelector('.sp'),u=a.dataset.sprite,i=new Image();i.onload=function(){sp.style.backgroundImage='url('+u+')';a.classList.add('ready')};i.src=u})}
+addEventListener('load',function(){setTimeout(warmAnim,800)});
+d.querySelectorAll('.frame>img').forEach(function(i){function ok(){i.classList.add('ld')}if(i.complete&&i.naturalWidth)ok();else{i.addEventListener('load',ok);i.addEventListener('error',ok)}});
 })();"""
 
 
@@ -506,8 +571,9 @@ def document(pg, title, body, body_class="", description=None, og_image=None, pr
     subset = "cyrillic" if pg.lang == "ru" else "latin"
     alternates = "".join(f'<link rel="alternate" hreflang="{lang}" href="{domain}{pg.url(pg.key, lang)}">'
                          for lang in LANGS)
-    alternates += f'<link rel="alternate" hreflang="x-default" href="{domain}{pg.url(pg.key, "ru")}">'
-    og = f'<meta property="og:image" content="{domain}{og_image}">' if og_image else ""
+    alternates += f'<link rel="alternate" hreflang="x-default" href="{domain}{pg.url(pg.key, "en")}">'
+    og = (f'<meta property="og:image" content="{domain}/og.jpg"><meta property="og:image:width" content="1200">'
+          f'<meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">')
     preload = ""
     if preload_img:
         srcset = f' imagesrcset="{preload_img["srcset"]}" imagesizes="{preload_img.get("sizes", "100vw")}"' \
@@ -518,7 +584,8 @@ def document(pg, title, body, body_class="", description=None, og_image=None, pr
 <html lang="{pg.lang}">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>document.documentElement.className+=" js"</script>
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <meta name="theme-color" content="#0B0B0B">
@@ -554,22 +621,24 @@ def write(path, text):
 
 # ---------------------------------------------------------------- pages
 
-def frame(p, poster, alt, eager=False, high=False):
+def frame(p, poster, alt, eager=False, high=False, overlay=""):
     if not poster:
-        return f'<div class="frame"><div style="background:{p["color"]}"></div></div>'
+        return f'<div class="frame"><div style="background:{p["color"]}"></div>{overlay}</div>'
     style = f'object-position:{esc(p["focus"])}' if p.get("focus") else ""
-    return f'<div class="frame">{img_tag(poster, alt, TILE_SIZES, eager=eager, high=high, style=style)}</div>'
+    bg = f' style="background-image:url({poster["lqip"]})"' if poster.get("lqip") else ""
+    return (f'<div class="frame"{bg}>{img_tag(poster, alt, TILE_SIZES, eager=eager, high=high, style=style)}'
+            f'{overlay}</div>')
 
 
 def meta_line(pg, p):
-    return f'{esc(pg.t(p["type"]))} · {esc(p["year"])}' if p.get("year") else esc(pg.t(p["type"]))
+    return esc(pg.t(p["type"]))
 
 
 def lightbox_attrs(pg, p):
     """Data for opening the video in place, without leaving the grid."""
     if not p["kinescope_id"]:
         return ""
-    meta = pg.t(p["type"]) + (f' · {p["year"]}' if p.get("year") else "")
+    meta = pg.t(p["type"])
     return (f' data-kinescope="{esc(p["kinescope_id"])}" data-title="{esc(pg.t(p["title"]))}"'
             f' data-meta="{esc(meta)}"')
 
@@ -579,15 +648,16 @@ def work_page(pg, projects, posters, logo):
     for i, p in enumerate(projects):
         title = pg.t(p["title"])
         text = pg.t(p.get("text") or {"ru": "", "en": ""})
-        desc = f"<p>{esc(text)}</p>" if text else ""
+        overlay = f'<div class="ov"><p>{esc(text)}</p></div>' if text else ""
+        desc = f'<p class="cap-d">{esc(text)}</p>' if text else ""
         tiles.append(
             f'<a class="tile" href="{pg.url("project:" + p["slug"])}"{lightbox_attrs(pg, p)}>'
-            f'{frame(p, posters[p["slug"]], title, eager=i < 3, high=i == 0)}'
+            f'{frame(p, posters[p["slug"]], title, eager=i < 3, high=i == 0, overlay=overlay)}'
             f'<div class="cap"><div class="cap-row"><b>{esc(title)}</b><span>{meta_line(pg, p)}</span></div>{desc}</div></a>')
     body = f"""{header(pg)}
 <main>
 <h1 class="sr">{esc(pg.t(pg.site["name"]))} — {UI["works"][pg.lang]}</h1>
-<div class="grid" data-lb data-close="{UI["close"][pg.lang]}">
+<div class="grid" data-lb data-close="{UI["close"][pg.lang]}" data-prev="{UI["prev_work"][pg.lang]}" data-next="{UI["next_work"][pg.lang]}">
 {chr(10).join(tiles)}
 </div>
 </main>
@@ -616,7 +686,7 @@ def about_page(pg, portraits):
 <main class="about">
 <div class="portrait">
 <button class="pframe" type="button" aria-label="{UI["next_portrait"][pg.lang]}">{imgs}</button>
-<div class="pbtns" role="group" aria-label="{UI["portraits"][pg.lang]}">{btns}</div>
+<div class="pbtns" role="group" aria-label="{UI["portraits"][pg.lang]}">{btns}<span class="pcount" aria-live="polite">1 / {len(portraits)}</span></div>
 </div>
 <div class="bio">
 <blockquote class="quote">{esc(pg.t(about["quote"]))}</blockquote>
@@ -700,18 +770,26 @@ def project_page(pg, p, nxt, poster, big_poster, stills):
 
 
 def not_found_page(site):
-    pg = Page(site, "ru", "work", "/")
+    pg = Page(site, "en", "work", "/")
     body = f"""{header(pg)}
 <main class="e404">
 <h1>404</h1>
-<p>Такой страницы нет. <a href="/">На главную</a></p>
-<p lang="en">This page doesn’t exist. <a href="/en/">Home</a></p>
+<p>This page doesn’t exist. <a href="/">Home</a></p>
+<p lang="ru">Такой страницы нет. <a href="/ru/">На главную</a></p>
 </main>"""
-    (OUT / "404.html").write_text(document(pg, "404 — " + site["name"]["ru"], body), encoding="utf-8")
+    (OUT / "404.html").write_text(document(pg, "404 — " + site["name"]["en"], body), encoding="utf-8")
 
 
 def icons_and_meta(site, logo_src, pages):
     if Image is not None:
+        # link preview (Telegram, WhatsApp, etc.): the eye on black
+        with Image.open(logo_src) as eye:
+            eye = eye.convert("RGBA")
+            card = Image.new("RGBA", (1200, 630), (11, 11, 11, 255))
+            w = 560
+            mark = eye.resize((w, round(eye.height * w / eye.width)), Image.LANCZOS)
+            card.alpha_composite(mark, ((1200 - mark.width) // 2, (630 - mark.height) // 2))
+            card.convert("RGB").save(OUT / "og.jpg", quality=88)
         with Image.open(logo_src) as eye:
             eye = eye.convert("RGBA")
             for name, size in (("favicon.png", 64), ("apple-touch-icon.png", 180)):
@@ -745,7 +823,8 @@ def build():
 
     photos = MEDIA / "photos"
     logo_src = photos / "eye-white.png"
-    logo = image(logo_src, (112,), lossless=True)
+    logo = image(logo_src, (112, 168), lossless=True)
+    LOGO.update(logo)
     eyes = image(photos / "contact-eyes.jpg", (800, 1280, 1920, 2560), quality=76)
     portraits = [(m, image(photos / m["file"], (520, 800, 1040), quality=74)) for m in site["about"]["portraits"]]
 
